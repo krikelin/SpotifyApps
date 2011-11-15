@@ -1,3 +1,18 @@
+/*
+ * Copyright (C) 2011 Alexander Forselius
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.krikelin.mako;
 import com.krikelin.mako.javascript.*;
 import java.util.Hashtable;
@@ -79,7 +94,7 @@ public class MakoEngine
     public String HandleToTokens(String Line, char signature)
     {
         
-        Hashtable<String, Object> Variables = new Hashtable<String, Object>();
+        new Hashtable<String, Object>();
         // The index of the beginning of an varialbe statement @{
         int IndexOf = 0;
         /**
@@ -321,15 +336,13 @@ public class MakoEngine
          * This is done before any other preprocessing
          * */
         String CallStack = "";
-        String[] lines = input.split("\n");
+        input.split("\n");
         /**
          * Boolean indicating which parse mode the parser is in,
          * true = in executable text
          * false = in output line 
          * */
         boolean parseMode = false;
-        // Boolean indicating first line is parsing
-        boolean firstLine = true;
         /***
          * Iterate through all lines and preprocess the page.
          * If page starts with an % it will be treated as an preparser code or all content

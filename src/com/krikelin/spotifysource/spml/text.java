@@ -1,6 +1,20 @@
+/*
+ * Copyright (C) 2011 Alexander Forselius
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.krikelin.spotifysource.spml;
 
-import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.Rectangle;
@@ -35,10 +49,7 @@ public class text extends Element {
 	public void paint(Graphics g, Rectangle bounds) {
 		// TODO Auto-generated method stub
 		super.paint(g, bounds);
-		int col = 0 ; // column
-		int row = 0; // row
 		int x = 0,y = 0;
-		String lineBuffer ="";
 		String buffer = mText;
 		g.translate(bounds.x, bounds.y);
 		for(int i=0; i < buffer.length(); i++)
@@ -51,8 +62,6 @@ public class text extends Element {
 				
 				if(buffer.charAt(i+1 )== '\n' || x >=  wid - getPadding()*2)
 				{
-					col = 0;
-					row += 1;
 					y += strBounds.getHeight();
 					x = 0;
 				}
@@ -61,7 +70,6 @@ public class text extends Element {
 			//g.drawChars(new char[]{character},0+getPadding(),1+getPadding(), x, y);
 			// increase the pointer's location
 			getContext().getSkin().drawText(String.valueOf(character), getContext().getSkin().getForeColor(), g, x, y+20, true);
-			col += 1;
 			x += strBounds.getWidth();
 		}
 		g.translate(-bounds.x, -bounds.y);

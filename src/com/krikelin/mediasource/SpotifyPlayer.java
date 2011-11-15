@@ -1,18 +1,29 @@
+/*
+ * Copyright (C) 2011 Alexander Forselius
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.krikelin.mediasource;
 
 import java.awt.Image;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLConnection;
 import java.net.URLEncoder;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import javax.swing.JOptionPane;
 import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.w3c.dom.Document;
@@ -21,9 +32,6 @@ import org.w3c.dom.Element;
 import com.krikelin.spotifysource.IMCPlaybackEventListener;
 
 import com.krikelin.spotifysource.URI;
-
-import Spotify.Session;
-import Spotify.Track;
 
 public class SpotifyPlayer implements IMCSource {
 	public static final int MOVE_SONG_PLAYLIST = 12515;
@@ -69,7 +77,6 @@ public class SpotifyPlayer implements IMCSource {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	private Session mSpotifySession;
 	@Override
 	public void init() {
 		// TODO Auto-generated method stub
@@ -112,10 +119,6 @@ public class SpotifyPlayer implements IMCSource {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	private String mUserName = "drsounds";
-	private String mPassWord = "";
-	
-
 	@Override
 	public void stop() {
 		// TODO Auto-generated method stub
@@ -164,6 +167,7 @@ public class SpotifyPlayer implements IMCSource {
 		return mPlaybackListener;
 	}
 
+	@SuppressWarnings("unused")
 	@Override
 	public void play(final URI resource) {
 		// TODO Auto-generated method stub

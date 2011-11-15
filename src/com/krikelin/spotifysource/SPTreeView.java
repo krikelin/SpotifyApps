@@ -1,3 +1,18 @@
+/*
+ * Copyright (C) 2011 Alexander Forselius
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.krikelin.spotifysource;
 
 import java.awt.Color;
@@ -6,17 +21,16 @@ import java.awt.Dimension;
 import java.awt.Rectangle;
 import java.util.ArrayList;
 
-import javax.swing.AbstractListModel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.ListCellRenderer;
 
-public class SPTreeView extends JList {
-	public class SPCellRenderer implements ListCellRenderer
+public class SPTreeView extends JList<Object> {
+	public class SPCellRenderer implements ListCellRenderer<Object>
 	{
 
 		@Override
-		public Component getListCellRendererComponent(JList arg0, Object arg1,
+		public Component getListCellRendererComponent(JList<?> arg0, Object arg1,
 				int arg2, boolean arg3, boolean arg4) {
 			// TODO Auto-generated method stub
 			JPanel bc = new JPanel();
@@ -43,6 +57,7 @@ public class SPTreeView extends JList {
 	 * 
 	 */
 	private static final long serialVersionUID = -3552362935105235025L;
+	@SuppressWarnings("unchecked")
 	public SPTreeView(SpotifyWindow mContext, ArrayList<ISPEntry> mListModel)
 	{
 		super(new SPListModel(mListModel));

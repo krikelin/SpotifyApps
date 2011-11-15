@@ -1,10 +1,23 @@
+ /*
+ * Copyright (C) 2011 Alexander Forselius
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.krikelin.spotifysource;
 
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.Image;
-
 import javax.swing.JComponent;
 
 public class BufferedContainer extends JComponent {
@@ -40,15 +53,12 @@ public class BufferedContainer extends JComponent {
 	public int addElement(Component elm,int left, int width,int height)
 	{
 		elm.setBounds(mPadding+left,mTopPosition,width-left-mPadding*2,height);
-		// super add the element
-		Component c =  super.add(elm);
 		mTopPosition+=height+mPadding;
 		return mTopPosition;
 	}
 	public void removeElement(Component elm)
 	{
 		int top = -1; 									// top of the current element
-		int ptop = 0; 									// previous top of the element
 		int elmHeight = elm.getBounds().height; 		// the height of the current element
 		for(int i=0; i < getComponents().length; i++)	
 		{
@@ -81,7 +91,6 @@ public class BufferedContainer extends JComponent {
 	public void hideElement(Component elm)
 	{
 		int top = -1; 									// top of the current element
-		int ptop = 0; 									// previous top of the element
 		int elmHeight = elm.getBounds().height; 		// the height of the current element
 		for(int i=0; i < getComponents().length; i++)	
 		{
@@ -114,7 +123,6 @@ public class BufferedContainer extends JComponent {
 	public void showElement(Component elm)
 	{
 		int top = -1; 									// top of the current element
-		int ptop = 0; 									// previous top of the element
 		int elmHeight = elm.getBounds().height; 		// the height of the current element
 		for(int i=0; i < getComponents().length; i++)	
 		{
@@ -149,13 +157,11 @@ public class BufferedContainer extends JComponent {
 		
 		
 	}
-	private boolean firstTime = true;
 	Graphics bufferGraphics ;
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 8423934581253592490L;
-	private Image mBufferedImage;
 	@Override
 	public void paint(Graphics g)
 	{

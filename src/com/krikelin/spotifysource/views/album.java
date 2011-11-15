@@ -1,25 +1,32 @@
+/*
+ * Copyright (C) 2011 Alexander Forselius
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.krikelin.spotifysource.views;
-import com.krikelin.spotifysource.widget.*;
-
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.GridLayout;
 import java.awt.Label;
-import java.awt.ScrollPane;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 
 import javax.swing.Box;
-import javax.swing.BoxLayout;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.xml.sax.SAXException;
 
-import com.krikelin.spotifysource.view.*;
 import com.krikelin.spotifysource.*;
 public class album extends SPActivity {
 	private URI mUri;
@@ -67,7 +74,7 @@ public class album extends SPActivity {
 			mHeader.setBounds(2,2,33,33);
 			mHeader.setForeground(new Color(0xaaffaa));
 			ArrayList<ISPEntry> tracks = new ArrayList<ISPEntry>();
-			SpotifySearch ss = new SpotifySearch();
+			new SpotifySearch();
 			 
 				for(ISPEntry uri : _tracks)
 				{
@@ -78,8 +85,6 @@ public class album extends SPActivity {
 			c.setBounds(2,2,1640,1480);
 			add(c);
 			
-			int mTrackHeight = 18;
-			int i=0;
 			/*for(URI track : mAlbumTracks)
 			{
 				SPEntry entry = new SPEntry(this,getContext(),track,new URI("","spotify:a:a"),new URI("","spotify:ac:c"),new URI("","spotify:ac:c"));

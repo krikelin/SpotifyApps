@@ -1,7 +1,21 @@
+/*
+ * Copyright (C) 2011 Alexander Forselius
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.krikelin.spotifysource;
 
 import java.awt.Color;
-import java.awt.Container;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -11,8 +25,6 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
-
-import com.krikelin.spotifysource.widget.events.*;
 
 public class SPTabBar extends com.krikelin.spotifysource.BufferedCanvas implements SPWidget, com.krikelin.spotifysource.SPPart {
 	/***
@@ -45,7 +57,7 @@ public class SPTabBar extends com.krikelin.spotifysource.BufferedCanvas implemen
 	{
 		return mTabs;
 	}
-	private int mX,mY;
+	private int mX;
 	private int mHoveredIndex=0;
 	/**
 	 * Adds an tab to the specified location
@@ -119,10 +131,9 @@ public class SPTabBar extends com.krikelin.spotifysource.BufferedCanvas implemen
 					}
 				
 				}
-				int t_width = 0;
 				if(currentActivity!=null){
 					String name = currentActivity.getTitle();
-					t_width = SPTabBar.this.getFontMetrics(getFont()).stringWidth(name);
+					SPTabBar.this.getFontMetrics(getFont()).stringWidth(name);
 					
 				}
 				int x = 0;
@@ -164,7 +175,7 @@ public class SPTabBar extends com.krikelin.spotifysource.BufferedCanvas implemen
 				// TODO Auto-generated method stub
 				
 				mX=arg0.getX();
-				mY=arg0.getY();
+				arg0.getY();
 				int pos = 0;
 				for(int i=0; i < 100; i++)
 				{
@@ -318,10 +329,10 @@ public class SPTabBar extends com.krikelin.spotifysource.BufferedCanvas implemen
 		// TODO Auto-generated method stub
 		return null;
 	}
-	private void setSelectedIndex(int mSelectedIndex) {
+	public void setSelectedIndex(int mSelectedIndex) {
 		this.mSelectedIndex = mSelectedIndex;
 	}
-	private int getSelectedIndex() {
+	public int getSelectedIndex() {
 		return mSelectedIndex;
 	}
 	public void addTabChangeHandler(OnTabChangeListener mOnTabChangeHandler) {

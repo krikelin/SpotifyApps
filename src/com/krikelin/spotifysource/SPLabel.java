@@ -1,11 +1,9 @@
 package com.krikelin.spotifysource;
 
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Cursor;
 import java.awt.Font;
 import java.awt.Graphics;
-import java.awt.Label;
 
 
 public class SPLabel extends BufferedCanvas implements com.krikelin.spotifysource.SPPart {

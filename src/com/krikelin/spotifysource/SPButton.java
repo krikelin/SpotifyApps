@@ -1,11 +1,24 @@
+/*
+ * Copyright (C) 2011 Alexander Forselius
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.krikelin.spotifysource;
 
 import java.awt.Canvas;
 import java.awt.Color;
-import java.awt.Event;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Image;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
@@ -13,8 +26,6 @@ import com.android.ninepatch.NinePatch;
 
 public class SPButton extends Canvas implements SPWidget, SPPart {
 	private SPOnClickListener mClickListener;
-	private SPSkin mSkin;
-	
 	private String mLabel;
 	private SpotifyWindow mHost;
 	public SPButton(SpotifyWindow host)
@@ -37,7 +48,6 @@ public class SPButton extends Canvas implements SPWidget, SPPart {
 	} 
 	private void drawButton(NinePatch c,Graphics g)
 	{
-		int threshold=12;
 		c.draw((Graphics2D)g, 0, 0, getWidth(), getHeight());
 	}
 	/**

@@ -1,27 +1,35 @@
+/*
+ * Copyright (C) 2011 Alexander Forselius
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.krikelin.spotifysource.views;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Container;
 import java.awt.Rectangle;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 
-import com.krikelin.spotifysource.Album;
 import com.krikelin.spotifysource.ISPEntry;
-import com.krikelin.spotifysource.MenuListModel;
 import com.krikelin.spotifysource.SPActivity;
 import com.krikelin.spotifysource.SPContentView;
-import com.krikelin.spotifysource.SPLabel;
 import com.krikelin.spotifysource.SPListView;
 import com.krikelin.spotifysource.SPTableModel;
 import com.krikelin.spotifysource.SpotifySearch;
 import com.krikelin.spotifysource.SpotifyWindow;
 import com.krikelin.spotifysource.URI;
-import com.krikelin.spotifysource.views.home.Overview;
-
-import javax.swing.*;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.xml.sax.SAXException;

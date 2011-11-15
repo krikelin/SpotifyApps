@@ -1,4 +1,18 @@
-package com.krikelin.spotifysource.views;
+/*
+ * Copyright (C) 2011 Alexander Forselius
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */package com.krikelin.spotifysource.views;
 
 import java.io.IOException;
 import java.net.URL;
@@ -26,6 +40,7 @@ import com.krikelin.spotifysource.URI;
 
 public class market extends SPActivity {
 	private ArrayList<App> new_apps = new ArrayList<App>();
+	@SuppressWarnings("unused")
 	private ArrayList<App> top_apps = new ArrayList<App>();
 	
 	public class App{
@@ -189,11 +204,8 @@ public class market extends SPActivity {
 		 * 
 		 */
 		private static final long serialVersionUID = -1049366795495350915L;
-		private ArrayList<App> apps;
 		public Overview(SPActivity activity, SpotifyWindow mContext,ArrayList<App> app_list) {
 			super(activity, mContext);
-			this.apps= app_list;
-		
 			setTexturedBackground(getContext().getSkin().getDashedBackground());
 		}
 		

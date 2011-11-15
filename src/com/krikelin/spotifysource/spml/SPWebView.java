@@ -1,18 +1,12 @@
 package com.krikelin.spotifysource.spml;
-import java.awt.Component;
-import java.awt.Graphics;
-import java.awt.Rectangle;
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Properties;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import javax.script.ScriptException;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
@@ -118,6 +112,7 @@ public class SPWebView extends BufferedContainer {
 	
 		return null;
 	}
+	@SuppressWarnings("unused")
 	public void loadMarkup(String markup,Properties props)
 	{
 		cf = "";

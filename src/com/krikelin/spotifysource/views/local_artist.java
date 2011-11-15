@@ -1,17 +1,28 @@
 package com.krikelin.spotifysource.views;
 
+/*
+ * Copyright (C) 2011 Alexander Forselius
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 import java.io.File;
 import java.util.ArrayList;
-
-import javax.swing.filechooser.FileFilter;
 
 import com.krikelin.spotifysource.Album;
 import com.krikelin.spotifysource.ISPEntry;
 import com.krikelin.spotifysource.SPActivity;
 import com.krikelin.spotifysource.SPContentView;
-import com.krikelin.spotifysource.SPEntry;
 import com.krikelin.spotifysource.SimpleEntry;
-import com.krikelin.spotifysource.SpotifyWindow;
 import com.krikelin.spotifysource.URI;
 
 public class local_artist extends SPActivity {
@@ -23,6 +34,11 @@ public class local_artist extends SPActivity {
 	
 	public class  Overview extends SPContentView
 	{
+
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = -6141938722403281025L;
 
 		public Overview() {
 			super(local_artist.this,local_artist.this.getContext());

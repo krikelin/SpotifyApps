@@ -1,11 +1,24 @@
+/*
+ * Copyright (C) 2011 Alexander Forselius
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.krikelin.spotifysource.views;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Image;
-import java.awt.Label;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.IOException;
@@ -14,17 +27,12 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
-import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
@@ -112,18 +120,14 @@ public class artist extends SPActivity {
 			}
 			
 		}
-		private String mArtistName = "";
 		/**
 		 * 
 		 */
 		private static final long serialVersionUID = 42950951403445964L;
-		private SpotifyWindow mContext;
-		private SPActivity mActivity;
-		
 		public Listeners(final String artistName )
 		{
 			super(artist.this,artist.this.getContext());
-			this.mContext=artist.this.getContext();
+			artist.this.getContext();
 			
 			Runnable action = new Runnable(){
 				
@@ -193,9 +197,6 @@ public class artist extends SPActivity {
 		 * 
 		 */
 		private static final long serialVersionUID = 1671854906555327802L;
-		private ArtistHeader mArtistHeader;
-		private SPDivider divider;
-		private JPanel panel;
 		public  Overview()
 		{
 			super(artist.this,artist.this.getContext());
@@ -220,8 +221,6 @@ public class artist extends SPActivity {
 			//top = addSection("EP","EP's",top);
 			//top = addSection("Single","Singles",top);
 			
-			
-			int mTrackHeight = 18;
 			
 			/*for(URI track : mAlbumTracks)
 			{

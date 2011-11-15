@@ -1,17 +1,29 @@
+/*
+ * Copyright (C) 2011 Alexander Forselius
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.krikelin.spotifysource;
 
-import java.awt.Canvas;
+ 
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
+
 import java.awt.Point;
 import java.awt.datatransfer.StringSelection;
 import java.awt.datatransfer.Transferable;
-import java.awt.dnd.DragGestureListener;
-import java.awt.dnd.DragSource;
-import java.awt.dnd.DragSourceListener;
 import java.awt.event.InputEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -25,8 +37,6 @@ import javax.swing.TransferHandler;
  * @author Alexander
  *
  */
-
-import com.krikelin.spotifysource.*;
 public class SPEntry extends BufferedCanvas implements SPElement, ISPEntry, SPWidget, SPPart {
 	public ArrayList<ISPEntry> getAssets()
 	{
@@ -66,7 +76,6 @@ public class SPEntry extends BufferedCanvas implements SPElement, ISPEntry, SPWi
 	private SPContentView mContentView;
 	private SPActivity mActivity;
 	private Float mPopularity;
-	private Duration mDuration;
 	private int mTrackNumber;
 	/**
 	 * If the entry is for music
@@ -90,7 +99,7 @@ public class SPEntry extends BufferedCanvas implements SPElement, ISPEntry, SPWi
 	 * @param mAuthorUri
 	 * @param mCollectionUri
 	 */
-	private int mLeft,mTop,mWidth,mHeight;
+	private int mLeft,mTop;
 	private ISPEntry mEntry;
 	@Override
 	public void setBackground(Color color)
@@ -266,7 +275,6 @@ public class SPEntry extends BufferedCanvas implements SPElement, ISPEntry, SPWi
 			draw(g,0,0,getWidth(),getHeight(),mAlternate);
 		
 	}
-	private String mTrackLength;
 	/***
 	 * Returns the background color
 	 * @param alternative
@@ -358,12 +366,10 @@ public class SPEntry extends BufferedCanvas implements SPElement, ISPEntry, SPWi
 			int speakerIcon = isSelected() ? DefaultSkin.IMG_PLAYBACK_ICON_SELECTED : currentPlayingView == getHost() ? DefaultSkin.IMG_PLAYBACK_ICON : DefaultSkin.IMG_PLAYBACK_ICON_DIFFERENT_VIEW;
 			try
 			{
-				Image speaker = getContext().getSkin().getImageById(speakerIcon);
-			//	g.drawImage(speaker,0,0,getBackgroundColor(alternative),null);
+				getContext().getSkin().getImageById(speakerIcon);
 			} 
 			catch(Exception e)
 			{
-				int zero = 0;
 				
 				
 			}
@@ -492,8 +498,6 @@ public class SPEntry extends BufferedCanvas implements SPElement, ISPEntry, SPWi
 	}
 	@Override
 	public void setHeight(int height) {
-		// TODO Auto-generated method stub
-		mHeight=height;
 		
 	}
 	
@@ -504,8 +508,6 @@ public class SPEntry extends BufferedCanvas implements SPElement, ISPEntry, SPWi
 	}
 	@Override
 	public void setWidth(int width) {
-		// TODO Auto-generated method stub
-		this.mWidth=width;
 	}
 	@Override
 	public void setLabel(String label) {
@@ -565,7 +567,6 @@ public class SPEntry extends BufferedCanvas implements SPElement, ISPEntry, SPWi
 			
 	}
 	public void setTrackLength(String mTrackLength) {
-		this.mTrackLength = mTrackLength;
 	}
 
 	@Override

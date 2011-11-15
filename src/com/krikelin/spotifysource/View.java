@@ -1,7 +1,21 @@
+/*
+ * Copyright (C) 2011 Alexander Forselius
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.krikelin.spotifysource;
 
 import java.awt.CardLayout;
-import java.awt.Component;
 import java.awt.Container;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
@@ -48,7 +62,6 @@ public class View extends Container implements SPPart {
         reader.close();
         return fileData.toString();
     }
-	private View mHost;
 	private MakoEngine mMakoEngine;
 	/**
 	 * The host view
@@ -65,7 +78,6 @@ public class View extends Container implements SPPart {
 	public View(View host,URI Uri)
 	{
 		mUri = Uri;
-		mHost = host;
 		// Create the page 
 		try {
 			preprocess(Uri);
@@ -118,8 +130,6 @@ public class View extends Container implements SPPart {
 	{
 		
 	}
-	private Container mContainer; 
-	
 	private URI mUri;
 	private long mIndex = 0L;
 	public long getIndex ()
@@ -183,7 +193,7 @@ public class View extends Container implements SPPart {
 		// Create hideable sections
 		for(int i=0; i < sections.getLength(); i++)
 		{
-			Element section = (Element)sections.item(i);
+			sections.item(i);
 			Container secContainer = new Container();
 			GridLayout gl = new GridLayout();
 			secContainer.setLayout(gl);
@@ -194,7 +204,7 @@ public class View extends Container implements SPPart {
 				
 				Element elm = (Element)e.getChildNodes().item(j);
 				try {
-					Component comp = createElement(secContainer,elm);
+					createElement(secContainer,elm);
 				} catch (InstantiationException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
