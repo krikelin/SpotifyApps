@@ -1,0 +1,168 @@
+package com.krikelin.mediasource;
+
+import java.awt.Image;
+import java.io.IOException;
+import java.util.Timer;
+import java.util.TimerTask;
+
+import com.krikelin.spotifysource.IMCPlaybackEventListener;
+import com.krikelin.spotifysource.URI;
+public class SpotifyPlayer implements IMCSource {
+	public static final int MOVE_SONG_PLAYLIST = 12515;
+	 
+	@Override
+	public String getTitle() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean rawFind(URI mediaSource) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public Image getIcon() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public void init() {
+		// TODO Auto-generated method stub
+		
+		logIn();
+	}
+
+	@Override
+	public boolean isLoggedIn() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	Process mSPShell;
+	@Override
+	public boolean logIn() {
+		// TODO Auto-generated method stub
+		/**
+		 * Initialize spotify shell
+		 */
+		try {
+		
+			
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return true;
+		
+	}
+
+	@Override
+	public boolean logOut() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public void unload() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public String getNamespace() {
+		// TODO Auto-generated method stub
+		return "spotify";
+	}
+
+	@Override
+	public Object invoke(int action, Object... args) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	private String mUserName = "drsounds";
+	private String mPassWord = "carin123";
+	
+
+	@Override
+	public void stop() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void seek(int pos) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public int getCurrentPosition() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public URI getCurrentTrack() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public URI getArtist(URI source) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public URI getPlaylist(URI source) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public URI getAlbum(URI source) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public IMCPlaybackEventListener getPlaybackListener() {
+		// TODO Auto-generated method stub
+		return mPlaybackListener;
+	}
+
+	@Override
+	public void play(final URI resource) {
+		// TODO Auto-generated method stub
+		// TODO Fix this to real, this is a dummy to see the code is working
+		if(c == null)
+		{
+			c = new Timer();
+			c.schedule(new TimerTask(){
+	
+				@Override
+				public void run() {
+					// TODO Auto-generated method stub
+					if(mPlaybackListener!=null)
+					{
+						mPlaybackListener.playbackCompleted(resource);
+					}
+					c = null;
+				}
+				
+			}, 3000);
+		}
+	}
+	private Timer c;
+	private IMCPlaybackEventListener mPlaybackListener;
+
+	@Override
+	public void setPlaybackListener(IMCPlaybackEventListener event) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+}

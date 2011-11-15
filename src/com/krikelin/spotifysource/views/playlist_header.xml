@@ -1,0 +1,13 @@
+<document>
+	<hbox>
+		<img src="${cover}" />
+		<vbox flex="1">
+			<text style="title;">${title}</text>
+			<hbox>
+				<img src="img_share" />
+				<img src="toolbar" flex="1" />
+			</hbox>
+			<description flex="1" id="description">$(text}</description>
+		</vbox>
+	</hbox>
+</document>
