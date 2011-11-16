@@ -26,7 +26,10 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
 
+import javax.swing.JComponent;
+
 public class SPTabBar extends com.krikelin.spotifysource.BufferedCanvas implements SPWidget, com.krikelin.spotifysource.SPPart {
+	private int id;
 	/***
 	 * Event handler for onLinkClick
 	 * @author Alex
@@ -371,6 +374,21 @@ public class SPTabBar extends com.krikelin.spotifysource.BufferedCanvas implemen
 	}
 	public void setCurrentActivity(Activity currentActivity) {
 		this.currentActivity = currentActivity;
+	}
+	@Override
+	public int getID() {
+		// TODO Auto-generated method stub
+		return id;
+	}
+	@Override
+	public void setID(int id) {
+		// TODO Auto-generated method stub
+		this.id = id;
+	}
+	@Override
+	public JComponent findViewById(int id) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

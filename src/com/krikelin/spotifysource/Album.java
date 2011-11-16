@@ -16,6 +16,7 @@
 package com.krikelin.spotifysource;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -26,6 +27,8 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.net.URL;
 import java.util.ArrayList;
+
+import javax.swing.JComponent;
 
 /**
  * Album view
@@ -294,6 +297,7 @@ public class Album extends BufferedContainer implements SPElementGroup, SPWidget
 		
 	}
 	private int mHeight = 0 ;
+	private int id;
 	@SuppressWarnings("unused")
 	@Override
 	public void draw(Graphics g)
@@ -405,6 +409,42 @@ public class Album extends BufferedContainer implements SPElementGroup, SPWidget
 	@Override
 	public String getLabel() {
 		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
+	@Override
+	public int getID() {
+		// TODO Auto-generated method stub
+		return this.id;
+	}
+
+
+
+	@Override
+	public void setID(int id) {
+		// TODO Auto-generated method stub
+		this.id = id;
+	}
+
+
+
+	@Override
+	public JComponent findViewById(int id) {
+		// TODO Auto-generated method stub
+		for(Component component : this.getComponents()){
+			if(component instanceof SPWidget){
+				if(((SPWidget)component).getID() == id){
+					return (JComponent)component;
+				}
+				Component subComponent = ((SPWidget) component).findViewById(id);
+				if(subComponent!= null){
+					return (JComponent)subComponent;
+				}
+			}
+			
+		}
 		return null;
 	}
 

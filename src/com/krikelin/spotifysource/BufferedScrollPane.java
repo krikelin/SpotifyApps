@@ -23,10 +23,11 @@ import java.awt.event.AdjustmentEvent;
 import java.awt.event.AdjustmentListener;
 
 import javax.swing.BoxLayout;
+import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
  
-public class BufferedScrollPane extends JScrollPane {
+public class BufferedScrollPane extends JScrollPane implements SPWidget {
 	Dimension dim;
 	private int mTopPosition = 20;
 	private int mPadding = 2;
@@ -163,6 +164,7 @@ public class BufferedScrollPane extends JScrollPane {
 		
 	}
 	JPanel mPanel;
+	private int id;
 	public BufferedScrollPane(SpotifyWindow mContext,JPanel p)
 	{
 		
@@ -235,5 +237,59 @@ public class BufferedScrollPane extends JScrollPane {
 	}
 	public void setTexturedBackground(Image texturedBackground) {
 		this.texturedBackground = texturedBackground;
+	}
+	@Override
+	public SpotifyWindow getContext() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public SPOnClickListener getOnClickListener() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public void setOnClickListener(SPOnClickListener listener) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void setLabel(String label) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public String getLabel() {
+		// TODO Auto-generated method stub
+		return null;
+		
+	}
+	@Override
+	public int getID() {
+		// TODO Auto-generated method stub
+		return id;
+	}
+	@Override
+	public void setID(int id) {
+		// TODO Auto-generated method stub
+		this.id = id;
+	}
+	@Override
+	public JComponent findViewById(int id) {
+		// TODO Auto-generated method stub
+		for(Component component : this.getComponents()){
+			if(component instanceof SPWidget){
+				if(((SPWidget)component).getID() == id){
+					return (JComponent)component;
+				}
+				Component subComponent = ((SPWidget) component).findViewById(id);
+				if(subComponent!= null){
+					return (JComponent)subComponent;
+				}
+			}
+			
+		}
+
+		return null;
 	} 
 }

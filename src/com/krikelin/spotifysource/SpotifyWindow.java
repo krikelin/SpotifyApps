@@ -76,7 +76,6 @@ public class SpotifyWindow extends JFrame implements Context, WindowListener {
 	 * @param u
 	 * @throws IOException
 	 */
-	@SuppressWarnings("unchecked")
 	public void addClass(URL u) throws IOException {
 
 		URLClassLoader sysLoader = (URLClassLoader) ClassLoader.getSystemClassLoader();
@@ -144,10 +143,9 @@ public class SpotifyWindow extends JFrame implements Context, WindowListener {
 		}
 		return (plugins);
 	}
-	@SuppressWarnings("unchecked")
 	public void loadPlugins() throws IOException, ClassNotFoundException{ 
 		String packages = readString(SPContainer.EXTENSION_DIR +"\\packages");
-		String activities = readString(SPContainer.EXTENSION_DIR+"\\activities\\spotiapp.action.VIEW");
+	//	String activities = readString(SPContainer.EXTENSION_DIR+"\\activities\\spotiapp.action.VIEW");
 		getPlugins().addAll(map(packages));
 		
 		setActivities(getMashups(readString(SPContainer.EXTENSION_DIR+"\\activities\\spotiapp.action.VIEW")));

@@ -14,6 +14,9 @@
  * limitations under the License.
  */
 package com.krikelin.spotifysource;
+
+import javax.swing.JComponent;
+
 public interface SPWidget  {
 	/**
 	 * Gets the skin for the widget
@@ -32,7 +35,12 @@ public interface SPWidget  {
  public void setOnClickListener(SPOnClickListener listener);
  public void setLabel(String label);
  public String getLabel();
- 
+
+public int getID();
+public void setID(int id);
+public JComponent findViewById(int id);
+
+
  
  
 }

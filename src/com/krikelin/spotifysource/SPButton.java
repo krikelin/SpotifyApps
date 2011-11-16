@@ -19,14 +19,12 @@ import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-import javax.swing.JButton;
+import javax.swing.JComponent;
 
 import com.android.ninepatch.NinePatch;
-import com.krikelin.spotifysource.spml.Element;
 
 public class SPButton extends Canvas implements SPWidget, SPPart {
 	private SPOnClickListener mClickListener;
@@ -104,6 +102,7 @@ public class SPButton extends Canvas implements SPWidget, SPPart {
 	}
 
 	boolean pressed = false;
+	private int id;
 	@Override
 	public SPOnClickListener getOnClickListener() {
 		// TODO Auto-generated method stub
@@ -137,6 +136,24 @@ public class SPButton extends Canvas implements SPWidget, SPPart {
 	public void setText(String string) {
 		// TODO Auto-generated method stub
 		mLabel = string;
+	}
+
+	@Override
+	public int getID() {
+		// TODO Auto-generated method stub
+		return this.id;
+	}
+
+	@Override
+	public void setID(int id) {
+		// TODO Auto-generated method stub
+		this.id = id;
+	}
+
+	@Override
+	public JComponent findViewById(int id) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

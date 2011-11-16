@@ -173,5 +173,16 @@ public class SimpleEntry implements ISPEntry {
 		// TODO Auto-generated method stub
 		return icon;
 	}
+	private Image cover;
+	@Override
+	public Image getCover() {
+		// TODO Auto-generated method stub
+		return cover;
+	}
+	@Override
+	public void setCover(Image cover) {
+		// TODO Auto-generated method stub
+		this.cover = cover;
+	}
 
 }

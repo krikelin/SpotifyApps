@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package com.krikelin.spotifysource;
+import java.awt.Image;
 import java.util.ArrayList; 
 /**
  * ISPEntry defines entry objects
@@ -72,5 +73,8 @@ public interface ISPEntry {
 	public SPContentView getPlaylist();
 	public Duration getDuration();
 	public String getReleaseType();
+	public Image getCover();
+	public void setCover(Image cover);
+	
 	public void setReleaseType(String type);
 }

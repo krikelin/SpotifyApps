@@ -25,7 +25,9 @@ import javax.swing.BorderFactory;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 
-public class SPContentView extends BufferedScrollPane implements SPPart {
+import com.krikelin.spotifysource.widgets.StreamContainer;
+
+public class SPContentView extends BufferedScrollPane implements SPWidget, SPPart, StreamContainer {
 
 
 	public int getSelectedIndex()
@@ -309,5 +311,107 @@ public class SPContentView extends BufferedScrollPane implements SPPart {
 	}
 
 	private ArrayList<SPWidget> mSPElements = new ArrayList<SPWidget>();
+	@Override
+	public ISPEntry playNext() {
+		// TODO Auto-generated method stub
+		for(int i=0; i < getEntries().size(); i++)
+		{
+			ISPEntry entry = getEntries().get(i);
+			/**
+			 * Play the next entry
+			 */
+			if(entry.equals(getCurrentPlayingEntry()))
+			{
+				try
+				{
+					ISPEntry nextEntry = getEntries().get(i+1);
+					return (nextEntry);
+				}
+				catch(Exception ex)
+				{
+					
+				}
+			}
+		}
+		return null;
+	}
+	@Override
+	public ISPEntry playPrevious() {
+		// TODO Auto-generated method stub
+		// TODO Auto-generated method stub
+		for(int i=getEntries().size(); i > 0; i--)
+		{
+			ISPEntry entry = getEntries().get(i);
+			/**
+			 * Play the next entry
+			 */
+			if(entry.equals(getCurrentPlayingEntry()))
+			{
+				try
+				{
+					ISPEntry nextEntry = getEntries().get(i-1);
+					return (nextEntry);
+				}
+				catch(Exception ex)
+				{
+					
+				}
+			}
+		}
+		return null;
+	}
+	@Override
+	public ISPEntry getCurrentPlayingEntry() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public SPOnClickListener getOnClickListener() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public void setOnClickListener(SPOnClickListener listener) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void setLabel(String label) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public String getLabel() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	private int id;
+	@Override
+	public int getID() {
+		// TODO Auto-generated method stub
+		return id;
+	}
+	@Override
+	public void setID(int id) {
+		// TODO Auto-generated method stub
+		this.id = id;
+	}
+	@Override
+	public JComponent findViewById(int id) {
+		// TODO Auto-generated method stub
+		for(Component component : this.getComponents()){
+			if(component instanceof SPWidget){
+				if(((SPWidget)component).getID() == id){
+					return (JComponent)component;
+				}
+				Component subComponent = ((SPWidget) component).findViewById(id);
+				if(subComponent!= null){
+					return (JComponent)subComponent;
+				}
+			}
+			
+		}
+		return null;
+	}
 
 }

@@ -25,11 +25,13 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import javax.swing.BorderFactory;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableModel;
 public class SPListView extends JTable implements SPWidget, SPPart {
+	private int id;
 	public class SPColumnRenderer extends JLabel implements TableCellRenderer
 	{
 
@@ -291,6 +293,20 @@ public class SPListView extends JTable implements SPWidget, SPPart {
 	public void setOnClickListener(SPOnClickListener listener) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	public int getID() {
+		return id;
+	}
+
+	public void setID(int id) {
+		this.id = id;
+	}
+
+	@Override
+	public JComponent findViewById(int id) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 }

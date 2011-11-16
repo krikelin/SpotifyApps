@@ -38,6 +38,7 @@ import javax.swing.TransferHandler;
  *
  */
 public class SPEntry extends BufferedCanvas implements SPElement, ISPEntry, SPWidget, SPPart {
+	int id;
 	public ArrayList<ISPEntry> getAssets()
 	{
 		return null;
@@ -587,6 +588,32 @@ public class SPEntry extends BufferedCanvas implements SPElement, ISPEntry, SPWi
 
 	public int getTrackNumber() {
 		return mTrackNumber;
+	}
+	private Image cover;
+	@Override
+	public Image getCover() {
+		// TODO Auto-generated method stub
+		return cover;
+	}
+	@Override
+	public void setCover(Image cover) {
+		// TODO Auto-generated method stub
+		this.cover = cover;
+	}
+	@Override
+	public int getID() {
+		// TODO Auto-generated method stub
+		return id;
+	}
+	@Override
+	public void setID(int id) {
+		// TODO Auto-generated method stub
+		this.id = id;
+	}
+	@Override
+	public JComponent findViewById(int id) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	
