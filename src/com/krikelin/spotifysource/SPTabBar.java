@@ -59,6 +59,14 @@ public class SPTabBar extends com.krikelin.spotifysource.BufferedCanvas implemen
 	}
 	private int mX;
 	private int mHoveredIndex=0;
+	public void setActiveTab(int index){
+		mHoveredIndex = index;
+		try{
+			getOnTabChangeHandler().onTabChange(index, mTabs.get(index).Title);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+	}
 	/**
 	 * Adds an tab to the specified location
 	 * @param name The name of the tab.
@@ -69,7 +77,24 @@ public class SPTabBar extends com.krikelin.spotifysource.BufferedCanvas implemen
 		overview.Title=name;
 		mTabs.add(overview);
 	}
-	private SPActivity currentActivity;
+	/**
+	 * Adds an tab to the specified location
+	 * @param name The name of the tab.
+	 */
+	public void remove(String name)
+	{
+		SPTab g = null;
+		for(SPTab t : mTabs){
+			if(t.Title == name){
+				g = t;
+				break;
+			}
+		}
+		if(g != null){
+			mTabs.remove(g);
+		}
+	}
+	private Activity currentActivity;
 	/**
 	 * Inserts an tab to the specified location
 	 * @param name
@@ -83,12 +108,12 @@ public class SPTabBar extends com.krikelin.spotifysource.BufferedCanvas implemen
 	}
 	int tab_width =80;
 	private SpotifyWindow mContext;
-	public SPTabBar(SpotifyWindow context, SPActivity spActivity)
+	public SPTabBar(SpotifyWindow context, Activity Activity)
 	{
 		super(context);
 		mTabs = new ArrayList<SPTab>();
 		mContext=context;
-		this.currentActivity=spActivity;
+		this.currentActivity=Activity;
 		addMouseListener(new MouseListener(){
 
 			@Override
@@ -177,7 +202,7 @@ public class SPTabBar extends com.krikelin.spotifysource.BufferedCanvas implemen
 				mX=arg0.getX();
 				arg0.getY();
 				int pos = 0;
-				for(int i=0; i < 100; i++)
+				for(int i=0; i < mTabs.size(); i++)
 				{
 					tab_width = SPTabBar.this.getFontMetrics(getFont()).stringWidth(mTabs.get(i).Title) + card*2;
 					
@@ -341,10 +366,10 @@ public class SPTabBar extends com.krikelin.spotifysource.BufferedCanvas implemen
 	public OnTabChangeListener getOnTabChangeHandler() {
 		return mOnTabChangeHandler;
 	}
-	public SPActivity getCurrentActivity() {
+	public Activity getCurrentActivity() {
 		return currentActivity;
 	}
-	public void setCurrentActivity(SPActivity currentActivity) {
+	public void setCurrentActivity(Activity currentActivity) {
 		this.currentActivity = currentActivity;
 	}
 

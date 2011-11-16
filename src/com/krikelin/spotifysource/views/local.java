@@ -14,8 +14,12 @@
  * limitations under the License.
  */
 package com.krikelin.spotifysource.views;
+import java.net.URL;
+import java.util.Enumeration;
+import java.util.HashMap;
+
 import com.krikelin.spotifysource.*;
-public class local extends SPActivity {
+public class local extends Activity {
 	/**
 	 * 
 	 */
@@ -29,7 +33,7 @@ public class local extends SPActivity {
 		 */
 		private static final long serialVersionUID = 1L;
 
-		public Overview(SPActivity activity, SpotifyWindow mContext) {
+		public Overview(Activity activity, SpotifyWindow mContext) {
 			super(activity, mContext);
 			// TODO Auto-generated constructor stub
 		}
@@ -46,5 +50,7 @@ public class local extends SPActivity {
 		// TODO Auto-generated method stub
 
 	}
+
+	
 
 }

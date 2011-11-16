@@ -59,8 +59,8 @@ public class Album extends BufferedContainer implements SPElementGroup, SPWidget
 	public ArrayList<TrackSection> trackSections = new ArrayList<TrackSection>();
 	private SPContentView mContentView;
 	private ArrayList<ISPEntry> mAlbumTracks = new ArrayList<ISPEntry>();
-	private SPActivity mActivity;
-	public SPActivity getActivity()
+	private Activity mActivity;
+	public Activity getActivity()
 	{
 		return mActivity;
 	}
@@ -75,7 +75,7 @@ public class Album extends BufferedContainer implements SPElementGroup, SPWidget
 	/**
 	 * 
 	 */
-	public Album(int iWidth,int iHeight, URI mUri,String name,SPActivity mActivity,ArrayList<ISPEntry> mAlbumTracks, SpotifyWindow mContext,SPContentView mContentView)
+	public Album(int iWidth,int iHeight, URI mUri,String name,Activity mActivity,ArrayList<ISPEntry> mAlbumTracks, SpotifyWindow mContext,SPContentView mContentView)
 	{
 		
 		super(mContext);

@@ -23,7 +23,7 @@ import java.net.MalformedURLException;
 import java.util.ArrayList;
 
 import com.krikelin.spotifysource.ISPEntry;
-import com.krikelin.spotifysource.SPActivity;
+import com.krikelin.spotifysource.Activity;
 import com.krikelin.spotifysource.SPContentView;
 import com.krikelin.spotifysource.SPListView;
 import com.krikelin.spotifysource.SPTableModel;
@@ -33,7 +33,7 @@ import com.krikelin.spotifysource.URI;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.xml.sax.SAXException;
-public class search extends SPActivity {
+public class search extends Activity {
 	public search() {
 	}
 	private URI mReferrer;

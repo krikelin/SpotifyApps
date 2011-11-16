@@ -34,8 +34,11 @@ public class SPTreeView extends JList<Object> {
 				int arg2, boolean arg3, boolean arg4) {
 			// TODO Auto-generated method stub
 			JPanel bc = new JPanel();
-			ImageBox icon = new ImageBox(getContext().getSkin().getImageById(DefaultSkin.ICON_START+1),SPTreeView.this.getContext());
-			icon.setBounds(new Rectangle(0,0,16,16));
+			SimpleEntry se = ((SimpleEntry)arg1);
+			ImageBox icon = new ImageBox(SPTreeView.this.getContext().getSkin().getImageById(DefaultSkin.ICON_START+1), SPTreeView.this.getContext());
+			if(se.getIcon() != null){
+				icon = new ImageBox(se.getIcon(), SPTreeView.this.getContext());
+			}
 			
 			bc.setLayout(null);
 			bc.setPreferredSize(new Dimension(200,16));

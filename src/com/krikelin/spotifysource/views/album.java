@@ -28,7 +28,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.xml.sax.SAXException;
 
 import com.krikelin.spotifysource.*;
-public class album extends SPActivity {
+public class album extends Activity {
 	private URI mUri;
 	ArrayList<ISPEntry> _tracks;
 	public class Description extends Container
@@ -80,7 +80,7 @@ public class album extends SPActivity {
 				{
 					tracks.add(uri);
 				}
-			
+			 
 			Album c = new Album(100,100,album.this.getUri(),album.this.getUri().toString(), album.this,tracks,album.this.getContext(),this);
 			c.setBounds(2,2,1640,1480);
 			add(c);

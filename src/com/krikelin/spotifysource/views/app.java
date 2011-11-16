@@ -20,12 +20,12 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 
 import com.krikelin.spotifysource.BufferedContainer;
-import com.krikelin.spotifysource.SPActivity;
+import com.krikelin.spotifysource.Activity;
 import com.krikelin.spotifysource.SPLabel;
 import com.krikelin.spotifysource.SpotifyWindow;
 import com.krikelin.spotifysource.URI;
 
-public class app extends SPActivity {
+public class app extends Activity {
 	String app_description;
 	/**
 	 * 
@@ -38,7 +38,7 @@ public class app extends SPActivity {
 		 */
 		private static final long serialVersionUID = -8899296963213710228L;
 
-		public Overview(SPActivity activity, SpotifyWindow mContext) {
+		public Overview(Activity activity, SpotifyWindow mContext) {
 			super(mContext);
 			// TODO Auto-generated constructor stub
 			setLayout(new GridLayout(2, 1));

@@ -15,10 +15,10 @@
  */
 package com.krikelin.spotifysource.views;
 
-import com.krikelin.spotifysource.SPActivity;
+import com.krikelin.spotifysource.Activity;
 import com.krikelin.spotifysource.URI;
 
-public class watcher extends SPActivity {
+public class watcher extends Activity {
 
 	/**
 	 * 

@@ -186,7 +186,7 @@ public class DefaultSkin extends SPSkin {
 			// set playback icons
 			mPlaybackIconImage = new Image[3];
 			mButtonImage = sliceBitmap(r,202,225,55,28);
-			mButtonPressedImage =sliceBitmap(r,204,257,53,26);
+			mButtonPressedImage =sliceBitmap(r,202,250,55,28);
 			
 			mPlaybackIconImage[0]= sliceBitmap(r,0,83,24,24);
 			mPlaybackIconImage[1]= sliceBitmap(r,0,83,24,24);
@@ -201,7 +201,7 @@ public class DefaultSkin extends SPSkin {
 	public NinePatch getButtonImage() {
 		// TODO Auto-generated method stub
 		
-		return NinePatch.load((BufferedImage)mButtonImage, true, true);
+		return NinePatch.load((BufferedImage)mButtonImage, true, false);
 	}
 
 	@Override

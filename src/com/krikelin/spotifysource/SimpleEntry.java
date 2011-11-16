@@ -15,16 +15,18 @@
  */
 package com.krikelin.spotifysource;
 
+import java.awt.Image;
 import java.util.ArrayList;
 
 
 public class SimpleEntry implements ISPEntry {
 	private URI mAuthorUri,mCollectionUri,mPlaylistUri,mUri;
-	private SPActivity mActivity;
+	private Activity mActivity;
 	private ArrayList<ISPEntry> mAssets = new ArrayList<ISPEntry>();
 	private SPContentView mContentView;
 	private Duration mDuration;
 	private Float mPopularity;
+	private Image icon;
 	private String mReleaseType;
 	private int mTrackNumber;
 	public void setDuration(int length)
@@ -36,8 +38,18 @@ public class SimpleEntry implements ISPEntry {
 	{
 		return mUri.toString();
 	}
-	
-	public SimpleEntry(SPActivity mActivity,SPContentView mContentView,URI mUri,URI mAuthorUri,URI mCollectionUri,URI mPlaylistUri)
+	public SimpleEntry(Image icon, Activity mActivity,SPContentView mContentView,URI mUri,URI mAuthorUri,URI mCollectionUri,URI mPlaylistUri)
+	{
+		this.icon = icon;
+		this.mContentView=mContentView;
+		this.mActivity = mActivity;
+		this.mAuthorUri=mAuthorUri;
+		this.mCollectionUri=mCollectionUri;
+		this.mUri = mUri;
+		
+		
+	}
+	public SimpleEntry(Activity mActivity,SPContentView mContentView,URI mUri,URI mAuthorUri,URI mCollectionUri,URI mPlaylistUri)
 	{
 		this.mContentView=mContentView;
 		this.mActivity = mActivity;
@@ -116,7 +128,7 @@ public class SimpleEntry implements ISPEntry {
 		
 	}
 	@Override
-	public SPActivity getActivity() {
+	public Activity getActivity() {
 		// TODO Auto-generated method stub
 		return mActivity;
 	}
@@ -156,6 +168,10 @@ public class SimpleEntry implements ISPEntry {
 	}
 	public int getTrackNumber() {
 		return mTrackNumber;
+	}
+	public Image getIcon() {
+		// TODO Auto-generated method stub
+		return icon;
 	}
 
 }

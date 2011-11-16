@@ -21,12 +21,12 @@ import java.awt.Container;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 
-import com.krikelin.spotifysource.SPActivity;
+import com.krikelin.spotifysource.Activity;
 import com.krikelin.spotifysource.SPLabel;
 import com.krikelin.spotifysource.SpotifyWindow;
 import com.krikelin.spotifysource.URI;
 
-public class radio extends SPActivity {
+public class radio extends Activity {
 	public class Overview extends Container
 	{
 		private SPLabel mHeader=  new SPLabel(radio.this.getContext(),"Radio");

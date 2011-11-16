@@ -15,7 +15,7 @@
  */
 package com.krikelin.spotifysource.views;
 import com.krikelin.spotifysource.*;
-public class home extends SPActivity {
+public class home extends Activity {
 	public class Overview extends SPContentView
 	{
 		@SuppressWarnings("unused")

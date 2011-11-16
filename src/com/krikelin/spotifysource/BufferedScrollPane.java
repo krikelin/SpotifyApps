@@ -81,14 +81,7 @@ public class BufferedScrollPane extends JScrollPane {
 	public void paint(Graphics g) {
 		
 		super.paint(g);
-		if(texturedBackground != null){
-			for(int i=0; i < this.getWidth()/ psize+3 ; i++){
-				for(int j=0; j < this.getHeight()/psize+3; j++){
-					g.drawImage(getTexturedBackground(),i*psize,j*psize,psize,psize, null);
-					
-				}
-			}
-		}
+	
 	}
 	public void hideElement(Component elm)
 	{

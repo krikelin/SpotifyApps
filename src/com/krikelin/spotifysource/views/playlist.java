@@ -39,7 +39,7 @@ import org.xml.sax.SAXException;
 
 import com.krikelin.spotifysource.*;
 import com.krikelin.spotifysource.spml.SPWebView;
-public class playlist extends SPActivity {
+public class playlist extends Activity {
 	private String mSlug;
 	/**
 	 * 
@@ -157,7 +157,7 @@ public class playlist extends SPActivity {
 		private SPListView listView;
 		private static final long serialVersionUID = 1640855018158536150L;
 		private SPWebView panel;
-		public Overview(SPActivity activity, SpotifyWindow mContext) {
+		public Overview(Activity activity, SpotifyWindow mContext) {
 			super(activity, mContext);
 			// TODO Auto-generated constructor stub
 			mTableContainer = getContentView();

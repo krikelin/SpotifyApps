@@ -104,7 +104,7 @@ public class SpotifySearch {
 	 * @return
 	 */
 	@SuppressWarnings("unused")
-	public ArrayList<ISPEntry> getArtist(String query, SPActivity mActivity,SPContentView mContentView)
+	public ArrayList<ISPEntry> getArtist(String query, Activity mActivity,SPContentView mContentView)
 	{
 		ArrayList<ISPEntry> result = new ArrayList<ISPEntry>();
 		String adress = query;
@@ -171,7 +171,7 @@ public class SpotifySearch {
 		return result;
 	}
 	
-	public ArrayList<ISPEntry> getSongs(String url, String query,SPActivity mActivity,SPContentView mContentView) throws MalformedURLException, SAXException, IOException, ParserConfigurationException
+	public ArrayList<ISPEntry> getSongs(String url, String query,Activity mActivity,SPContentView mContentView) throws MalformedURLException, SAXException, IOException, ParserConfigurationException
 	{
 		ArrayList<ISPEntry> result = new ArrayList<ISPEntry>();
 		query = URLEncoder.encode(query, "ISO-8859-1");

@@ -87,74 +87,28 @@ public class HeaderPanel extends BufferedContainer implements SPPart {
 		SPButton btn= new SPButton(getContext());
 		btn.setText("<");
 		btn.setPreferredSize(new Dimension(24,24));
-		btn.addMouseListener(new MouseListener(){
-
+		btn.setOnClickListener(new SPOnClickListener() {
+			
 			@Override
-			public void mouseClicked(MouseEvent arg0) {
+			public void Click(Object sender, Object args) {
 				// TODO Auto-generated method stub
 				if(mNavigateHandler!=null)
 					mNavigateHandler.navigate(NavigateListener.MODE_BACK);
 			}
-
-			@Override
-			public void mouseEntered(MouseEvent arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void mouseExited(MouseEvent arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void mousePressed(MouseEvent arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void mouseReleased(MouseEvent arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-			
 		});
 		this.add(btn);
 		SPButton btnForward = new SPButton(getContext());
 		btnForward.setText(">");
 		btnForward.setPreferredSize(new Dimension(24,24));
-		btnForward.addMouseListener(new MouseListener(){
+		btnForward.setOnClickListener(new SPOnClickListener() {
+			
 			@Override
-			public void mouseClicked(MouseEvent arg0) {
+			public void Click(Object sender, Object args) {
+				// TODO Auto-generated method stub
+				
 				// TODO Auto-generated method stub
 				if(mNavigateHandler!=null)
 					mNavigateHandler.navigate(NavigateListener.MODE_FORWARD);
-			}
-
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void mousePressed(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
 			}
 		});
 		add(btnForward);

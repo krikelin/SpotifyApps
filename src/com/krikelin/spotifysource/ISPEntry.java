@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 package com.krikelin.spotifysource;
-import java.util.ArrayList;
+import java.util.ArrayList; 
 /**
  * ISPEntry defines entry objects
  * @author Alexander
@@ -68,7 +68,7 @@ public interface ISPEntry {
 	
 	public URI getPlaylistUri();
 	public void setSelected(boolean selected);
-	public SPActivity getActivity();
+	public Activity getActivity();
 	public SPContentView getPlaylist();
 	public Duration getDuration();
 	public String getReleaseType();

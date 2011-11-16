@@ -20,17 +20,22 @@ import java.awt.CardLayout;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Graphics;
+import java.awt.Image;
 import java.lang.reflect.InvocationTargetException;
+import java.net.URL;
+import java.util.Enumeration;
+import java.util.HashMap;
 
 import javax.swing.SwingUtilities;
 
 /***
- * An SPActivity is an activity running inside Spotify Source
+ * An Activity is an activity running inside Spotify Source
  * 
  * @author Alexander
  *
  */
-public abstract class SPActivity extends Container implements com.krikelin.spotifysource.SPPart {
+public abstract class Activity extends Container implements Context, com.krikelin.spotifysource.SPPart {
 	protected SpotifyWindow mContext;
 	private SPTabBar mTabBar;
 	public String getTitle(){
@@ -54,8 +59,11 @@ public abstract class SPActivity extends Container implements com.krikelin.spoti
 	public void filterView(String query){
 		
 	}
+	public Image getIcon(){
+		return null;
+	}
 	/***
-	 * Checks if the drag over is allowed to the certain SPActivity
+	 * Checks if the drag over is allowed to the certain Activity
 	 * @param args
 	 * @return
 	 */
@@ -100,7 +108,9 @@ public abstract class SPActivity extends Container implements com.krikelin.spoti
 	 * @param args the uri of the view
 	 * @param result The result from the loading time
 	 */
-	public abstract void render( URI args,Object... result);
+	public  void render( URI args,Object... result){
+		this.mTabBar.remove("Loading");
+	}
 	
 	// View stack of viwes
 	private Container mViewStack;
@@ -120,6 +130,10 @@ public abstract class SPActivity extends Container implements com.krikelin.spoti
 	 */
 	private static final long serialVersionUID = -2263646627754317279L;
 	CardLayout cl ;
+	public void removePage(String name,Container view){
+		mTabBar.remove(name);
+		mViewStack.remove(mViewStack.getComponentZOrder(view));
+	}
 	/**
 	 * Adds an page to the view
 	 * @param name
@@ -135,17 +149,30 @@ public abstract class SPActivity extends Container implements com.krikelin.spoti
 	{
 		return mContentView;
 	}
+	Object c ;
 	public class Initializer implements Runnable{
 
 		@Override
 		public void run() {
 			// TODO Auto-generated method stub
-			Object c = 	SPActivity.this.onLoad(mUri);
+			c =	Activity.this.onLoad(mUri);
 			// Remove loading
-			remove(loadLabel);
 			mViewStack.setLayout(cl);
+			SwingUtilities.invokeLater(new Runnable(){
+
+				@Override
+				public void run() {
+					// TODO Auto-generated method stub
+					mTabBar.remove("Loading");
+					mViewStack.remove(0);
+					
+					Activity.this.render(mUri,c);
+					
+					mContext.navigate(mUri);
+				}
 				
-			SPActivity.this.render(mUri,c);
+			});
+			
 			validate();
 		}
 
@@ -156,7 +183,6 @@ public abstract class SPActivity extends Container implements com.krikelin.spoti
 		}
 		
 	}
-	private SPLabel loadLabel;
 	private URI mUri;
 	public SPContentView getViewHost()
 	{
@@ -184,6 +210,23 @@ public abstract class SPActivity extends Container implements com.krikelin.spoti
 	public void onLongDrop(URI source){
 		
 	}
+	public class Loading extends SPContentView{
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 4461240628766759646L;
+		SPLabel loadLabel;
+		@Override
+		public void paint(Graphics g) {
+			// TODO Auto-generated method stub
+			super.paint(g);
+		}
+		public Loading() {
+			super(Activity.this, Activity.this.getContext());
+			loadLabel = new SPLabel(getContext(),"Loading");
+			add(loadLabel);
+		}
+	}
 	/**
 	 * 
 	 * @param locator the uri that called the view
@@ -195,12 +238,13 @@ public abstract class SPActivity extends Container implements com.krikelin.spoti
 		mTabBar = new SPTabBar(getContext(),this);
 		
 		setLayout(new BorderLayout());
-		loadLabel = new SPLabel(getContext(),"Loading");
-		add(loadLabel);
+		
+		
 		setBackground(getContext().getSkin().getBackgroundColor());
 		setForeground(getContext().getSkin().getForeColor());
 		setUri(locator);
 		mViewStack = new Container();
+		addPage("Loading", new Loading());
 		cl = new CardLayout();
 		mViewStack.setLayout(new FlowLayout());
 		add(mViewStack,BorderLayout.CENTER); 
@@ -212,7 +256,7 @@ public abstract class SPActivity extends Container implements com.krikelin.spoti
 			@Override
 			public void onTabChange(int index, String title) {
 				// TODO Auto-generated method stub
-				SPActivity.this.cl.show(mViewStack, title);
+				Activity.this.cl.show(mViewStack, title);
 				
 			}
 			
@@ -253,4 +297,19 @@ public abstract class SPActivity extends Container implements com.krikelin.spoti
 		return mUri;
 	}
 	
+	/**
+	 * Not used yet
+	 */
+	
+	@Override
+	public HashMap<String, String> getResDomains() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Enumeration<URL> getLocalResources(String type) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

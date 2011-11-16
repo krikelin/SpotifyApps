@@ -79,22 +79,22 @@ public class SPContainer  extends Container implements SPPart{
 	    return classesA;
 	}
 	public static final String EXTENSION_DIR = "C:/Spotiapps/";
-	private Hashtable<String,SPActivity> mActivities = new Hashtable<String,SPActivity>();
-	private SPActivity mCurrentPage;
-	public SPActivity getCurrentPage()
+	private Hashtable<String,Activity> mActivities = new Hashtable<String,Activity>();
+	private Activity mCurrentPage;
+	public Activity getCurrentPage()
 	{
 		return mCurrentPage;
 	}
 	@SuppressWarnings("rawtypes")
 	Class[] loadedExtensions;
-	private Stack< SPActivity> mHistory = new Stack<SPActivity>();
-	private Stack< SPActivity> mFuture = new Stack<SPActivity>();
-	public Stack< SPActivity> getHistory()
+	private Stack< Activity> mHistory = new Stack<Activity>();
+	private Stack< Activity> mFuture = new Stack<Activity>();
+	public Stack< Activity> getHistory()
 	{
 		return mHistory;
 	}
 	
-	public Stack< SPActivity> getFuture()
+	public Stack< Activity> getFuture()
 	{
 		return mFuture; 
 	}
@@ -159,7 +159,7 @@ public class SPContainer  extends Container implements SPPart{
 			return;
 		}
 		getClass();
-		SPActivity activity = null;
+		Activity activity = null;
 		/***
 		 * Try load the user base plugins
 		
@@ -171,7 +171,7 @@ public class SPContainer  extends Container implements SPPart{
 		
 				try
 				{
-					activity = (SPActivity) c.newInstance();
+					activity = (Activity) c.newInstance();
 				}catch(Exception e)
 				{
 					
@@ -190,7 +190,7 @@ public class SPContainer  extends Container implements SPPart{
 		 */
 			try
 			{
-				activity = (SPActivity)Class.forName(	"com.krikelin.spotifysource.views."+uri.getApplication().toLowerCase()).newInstance();
+				activity = (Activity)Class.forName(	"com.krikelin.spotifysource.views."+uri.getApplication().toLowerCase()).newInstance();
 			}
 			catch(Exception e)
 			{
@@ -202,11 +202,14 @@ public class SPContainer  extends Container implements SPPart{
 						URLClassLoader cl = new URLClassLoader(new URL[] { c.toURI().toURL() 	},Thread.currentThread().getContextClassLoader());	
 						Thread.currentThread().setContextClassLoader(cl);
 					
-						activity = (SPActivity)cl.loadClass(s+"."+app).newInstance();
+						activity = (Activity)cl.loadClass(s+"."+app).newInstance();
 						
 					}*/
-				
-					activity = ((Class<SPActivity>)mContext.getActivities().get(app)).newInstance();
+					try{
+						activity = ((Class<Activity>)mContext.getActivities().get(app)).newInstance();
+					}catch(Exception ex){
+						activity = ((Class<Activity>)mContext.getMashups().get(app)).newInstance();
+					}
 				}  catch (InstantiationException e2) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -245,10 +248,10 @@ public class SPContainer  extends Container implements SPPart{
 		
 		
 	}
-	public void setActivies(Hashtable<String,SPActivity> mActivities) {
+	public void setActivies(Hashtable<String,Activity> mActivities) {
 		this.mActivities = mActivities;
 	}
-	public Hashtable<String,SPActivity> getActivies() {
+	public Hashtable<String,Activity> getActivies() {
 		return mActivities;
 	}
 	@Override

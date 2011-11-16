@@ -38,7 +38,7 @@ import org.xml.sax.SAXException;
 
 import com.krikelin.spotifysource.*;
 
-public class artist extends SPActivity {
+public class artist extends Activity {
 	
 	ArrayList<ISPEntry> mAlbums;
 	private URI mUri;

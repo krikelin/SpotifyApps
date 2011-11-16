@@ -20,12 +20,12 @@ import java.util.ArrayList;
 
 import com.krikelin.spotifysource.Album;
 import com.krikelin.spotifysource.ISPEntry;
-import com.krikelin.spotifysource.SPActivity;
+import com.krikelin.spotifysource.Activity;
 import com.krikelin.spotifysource.SPContentView;
 import com.krikelin.spotifysource.SimpleEntry;
 import com.krikelin.spotifysource.URI;
 
-public class local_artist extends SPActivity {
+public class local_artist extends Activity {
 
 	/**
 	 * 

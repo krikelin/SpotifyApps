@@ -31,14 +31,14 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 
-import com.krikelin.spotifysource.SPActivity;
+import com.krikelin.spotifysource.Activity;
 import com.krikelin.spotifysource.SPContentView;
 import com.krikelin.spotifysource.SPListView;
 import com.krikelin.spotifysource.SPScrollPane;
 import com.krikelin.spotifysource.SpotifyWindow;
 import com.krikelin.spotifysource.URI;
 
-public class market extends SPActivity {
+public class market extends Activity {
 	private ArrayList<App> new_apps = new ArrayList<App>();
 	@SuppressWarnings("unused")
 	private ArrayList<App> top_apps = new ArrayList<App>();
@@ -187,7 +187,7 @@ public class market extends SPActivity {
 		 */
 		private static final long serialVersionUID = -1049366795495350915L;
 		private ArrayList<App> apps;
-		public Home(SPActivity activity, SpotifyWindow mContext,ArrayList<App> app_list) {
+		public Home(Activity activity, SpotifyWindow mContext,ArrayList<App> app_list) {
 			super(activity, mContext);
 			this.apps= app_list;
 			// TODO Auto-generated constructor stub
@@ -204,7 +204,7 @@ public class market extends SPActivity {
 		 * 
 		 */
 		private static final long serialVersionUID = -1049366795495350915L;
-		public Overview(SPActivity activity, SpotifyWindow mContext,ArrayList<App> app_list) {
+		public Overview(Activity activity, SpotifyWindow mContext,ArrayList<App> app_list) {
 			super(activity, mContext);
 			setTexturedBackground(getContext().getSkin().getDashedBackground());
 		}

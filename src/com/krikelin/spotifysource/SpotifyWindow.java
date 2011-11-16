@@ -22,6 +22,7 @@ import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.WindowAdapter;
@@ -33,10 +34,13 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.Method;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Scanner;
 import java.util.prefs.Preferences;
@@ -50,7 +54,7 @@ import javax.swing.JSplitPane;
  * @author Alexander
  *
  */
-public class SpotifyWindow extends JFrame implements WindowListener {
+public class SpotifyWindow extends JFrame implements Context, WindowListener {
 	public String readString(String file) throws IOException{
 		
 		BufferedReader br = new BufferedReader(new FileReader(file));
@@ -66,13 +70,54 @@ public class SpotifyWindow extends JFrame implements WindowListener {
 		br.close();
 		return sb.toString();
 	}
+	/**
+	 * Add url
+	 * @from http://twit88.com/blog/2007/10/04/java-dynamic-loading-of-class-and-jar-file/
+	 * @param u
+	 * @throws IOException
+	 */
 	@SuppressWarnings("unchecked")
-	public void loadPlugins() throws IOException, ClassNotFoundException{ 
-		String packages = readString(SPContainer.EXTENSION_DIR +"\\packages");
-		String activities = readString(SPContainer.EXTENSION_DIR+"\\activities\\spotiapp.action.VIEW");
-		getPlugins().addAll(map(packages));
-		Hashtable<String, Class<SPActivity>> plugins = getActivities();
-		ArrayList<String> plugs = map(activities);
+	public void addClass(URL u) throws IOException {
+
+		URLClassLoader sysLoader = (URLClassLoader) ClassLoader.getSystemClassLoader();
+		URL urls[] = sysLoader.getURLs();
+		ArrayList<Object> newUrls = new ArrayList<Object>();
+		for (int i = 0; i < urls.length; i++) {
+			/*if (StringUtils.equalsIgnoreCase(urls[i].toString(), u.toString())) {
+				if (log.isDebugEnabled()) {
+					log.debug("URL " + u + " is already in the CLASSPATH");
+				}
+				return;
+				}
+			}*/
+			
+			newUrls.add(urls[i]);
+		}
+		newUrls.add(u);
+		try {
+			Class<?> sysclass = URLClassLoader.class;
+			Method method = sysclass.getDeclaredMethod("addURL", URL.class);
+			method.setAccessible(true);
+			URL[] nurls = new URL[newUrls.size()];
+			newUrls.toArray(nurls);
+			method.invoke(sysLoader, new Object[]{u});
+		} catch (Throwable t) {
+			t.printStackTrace();
+			throw new IOException("Error, could not add URL to system classloader");
+		}
+	}
+
+	private Hashtable<String, Class<Activity>> mashups = new Hashtable<>();
+	/**
+	 * Loads plugins from the desired folder to the arraylist
+	 * @param fileName
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	protected Hashtable<String, Class<Activity>> getMashups(String fileName){
+		ArrayList<String> plugs = map(fileName);
+		Hashtable<String, Class<Activity>> plugins = new Hashtable<String, Class<Activity>>();
+		
 		for(String plugin : plugs){
 			try{
 				String[] parts = plugin.split("\\.");
@@ -87,14 +132,26 @@ public class SpotifyWindow extends JFrame implements WindowListener {
 				
 				URLClassLoader cl = new URLClassLoader(new URL[] { c.toURI().toURL() 	},Thread.currentThread().getContextClassLoader());	
 				Thread.currentThread().setContextClassLoader(cl);
-				Class<SPActivity> sp_activity_type = (Class< SPActivity >) cl.loadClass(plugin);
+		//	addClass(new java.net.URL("file://"+SPContainer.EXTENSION_DIR+"jar/"+package_name+".jar"));
+			
+				Class<Activity> sp_activity_type = (Class< Activity >) cl.loadClass(plugin);
 				plugins.put(activity_name, sp_activity_type);
 			
 			}catch(Exception e){
 				e.printStackTrace();
 			}
-			setActivities(plugins);
+			
 		}
+		return (plugins);
+	}
+	@SuppressWarnings("unchecked")
+	public void loadPlugins() throws IOException, ClassNotFoundException{ 
+		String packages = readString(SPContainer.EXTENSION_DIR +"\\packages");
+		String activities = readString(SPContainer.EXTENSION_DIR+"\\activities\\spotiapp.action.VIEW");
+		getPlugins().addAll(map(packages));
+		
+		setActivities(getMashups(readString(SPContainer.EXTENSION_DIR+"\\activities\\spotiapp.action.VIEW")));
+		setMashups(getMashups(readString(SPContainer.EXTENSION_DIR+"\\activities\\spotiapp.action.LIST")));
 		
 	}
 	public ArrayList<String> map(String str){
@@ -107,7 +164,7 @@ public class SpotifyWindow extends JFrame implements WindowListener {
 	/**
 	 * List of installed activities
 	 */
-	private Hashtable<String, Class<SPActivity>> activities = new Hashtable<String, Class<SPActivity>>();
+	private Hashtable<String, Class<Activity>> activities = new Hashtable<String, Class<Activity>>();
 	/***
 	 * Arraylist of installed packages, eg.
 	 * com.krikelin.spotifysource
@@ -163,7 +220,7 @@ public class SpotifyWindow extends JFrame implements WindowListener {
 	} 
 	private URI mCurrentPlayingSong;
 	private SPContentView mCurrentPlaylist;
-	private SPActivity mCurrentPlayingActivity;
+	private Activity mCurrentPlayingActivity;
 	public void initiateApps(){
 		
 	}
@@ -307,6 +364,8 @@ public class SpotifyWindow extends JFrame implements WindowListener {
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
+				} catch (Exception e2){
+					
 				}
 				
 			}
@@ -497,6 +556,27 @@ public class SpotifyWindow extends JFrame implements WindowListener {
 		mListModel.add(new SimpleEntry(null,null,new URI("Home","spotify:home:a"),null,null,null));
 		mListModel.add(new SimpleEntry(null,null,new URI("Market","spotify:market"),null,null,null));
 		mListModel.add(new SimpleEntry(null,null,new URI("-","spotify:market"),null,null,null));
+		for(Class<Activity> act : getMashups().values()){
+			try {
+				Activity activity = act.newInstance();
+				// add list entry
+				Image icon = null;
+				try
+				{
+					icon = activity.getIcon();
+				}
+				catch(Exception e){
+					e.printStackTrace();
+				}
+				mListModel.add(new SimpleEntry(icon, null, null, new URI(activity.getTitle(),"spotify:"+act.getSimpleName()+":default"), null, null, null));
+				
+			} catch (InstantiationException | IllegalAccessException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			
+		}
+		
 		//mListModel.add(new SimpleEntry(null,null,new URI("Purchases","spotify:playlist:purchases"),null,null,null));
 		//mListModel.add(new SimpleEntry(null,null,new URI("Local files","spotify:library:coal"),null,null,null));
 		//mListModel.add(new SimpleEntry(null,null,new URI("-","spotify:playlist:purchases"),null,null,null));
@@ -640,10 +720,10 @@ public class SpotifyWindow extends JFrame implements WindowListener {
 		// TODO Auto-generated method stub
 		
 	}
-	public void setCurrentPlayingActivity(SPActivity mCurrentPlayingActivity) {
+	public void setCurrentPlayingActivity(Activity mCurrentPlayingActivity) {
 		this.mCurrentPlayingActivity = mCurrentPlayingActivity;
 	}
-	public SPActivity getCurrentPlayingActivity() {
+	public Activity getCurrentPlayingActivity() {
 		return mCurrentPlayingActivity;
 	}
 	public void setCurrentPlaylist(SPContentView mCurrentPlaylist) {
@@ -658,11 +738,27 @@ public class SpotifyWindow extends JFrame implements WindowListener {
 	public URI getCurrentPlayingSong() {
 		return mCurrentPlayingSong;
 	}
-	public Hashtable<String, Class<SPActivity>> getActivities() {
+	public Hashtable<String, Class<Activity>> getActivities() {
 		return activities;
 	}
-	public void setActivities(Hashtable<String, Class<SPActivity>> activities) {
+	public void setActivities(Hashtable<String, Class<Activity>> activities) {
 		this.activities = activities;
+	}
+	public Hashtable<String, Class<Activity>> getMashups() {
+		return mashups;
+	}
+	public void setMashups(Hashtable<String, Class<Activity>> mashups) {
+		this.mashups = mashups;
+	}
+	@Override
+	public HashMap<String, String> getResDomains() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public Enumeration<URL> getLocalResources(String type) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

@@ -41,7 +41,7 @@ Actions:
 	* Creating the Spotify UI components as following:
 		Specialised Table view.
 
-	* Created the outline of the extension infrastructure, derived classes 'SPActivity', not unlike Android infrastructure.
+	* Created the outline of the extension infrastructure, derived classes 'Activity', not unlike Android infrastructure.
 	
 Obstacles:
 	* Drawing remarks with flickering. Not all objects are behaving correctly. Mostly a problem by newbie experience of the framework.
@@ -62,7 +62,7 @@ Difference from the .NET work:
 		Spotify strongely dislike .NET, more appriciation may be experienced as an result, Java knowledge is asked by Spotify.
 	Changes:
 		* No messed view system 
-		All views are components of external java classes inherit SPActivity, an android like infrastructure. Much easier to maintain.
+		All views are components of external java classes inherit Activity, an android like infrastructure. Much easier to maintain.
 	Cons:
 		* Drawing flicker there is flickering with the drawing
 		

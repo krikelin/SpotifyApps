@@ -102,12 +102,12 @@ public class SPContentView extends BufferedScrollPane implements SPPart {
 	}
 	
 	private SpotifyWindow mContext;
-	private SPActivity mSPActivity;
-	public SPContentView(SPActivity activity,SpotifyWindow mContext)
+	private Activity mActivity;
+	public SPContentView(Activity activity,SpotifyWindow mContext)
 	{
 		super(mContext,new JPanel());
 		  
-		mSPActivity=activity;
+		mActivity=activity;
 		this.mContext=mContext;
 		setBorder(BorderFactory.createEmptyBorder());
 		// Set absolute layout
@@ -300,9 +300,9 @@ public class SPContentView extends BufferedScrollPane implements SPPart {
 		
 		return entries;
 	}
-	public SPActivity getHost()
+	public Activity getHost()
 	{
-		return mSPActivity;
+		return mActivity;
 	}
 	public ArrayList<SPWidget> getSPElements() {
 		return mSPElements;

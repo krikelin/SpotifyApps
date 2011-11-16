@@ -34,7 +34,7 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 import com.krikelin.spotifysource.*;
-public class local_files extends SPActivity {
+public class local_files extends Activity {
 	/**
 	 * 
 	 */
@@ -112,7 +112,7 @@ public class local_files extends SPActivity {
 		private SPListView listView;
 		private static final long serialVersionUID = 1640855018158536150L;
 		private SPPlaylistHeader panel;
-		public Overview(SPActivity activity, SpotifyWindow mContext) {
+		public Overview(Activity activity, SpotifyWindow mContext) {
 			super(activity, mContext);
 			// TODO Auto-generated constructor stub
 			mTableContainer = getContentView();

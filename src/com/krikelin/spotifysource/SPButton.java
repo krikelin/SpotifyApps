@@ -19,10 +19,14 @@ import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+import javax.swing.JButton;
+
 import com.android.ninepatch.NinePatch;
+import com.krikelin.spotifysource.spml.Element;
 
 public class SPButton extends Canvas implements SPWidget, SPPart {
 	private SPOnClickListener mClickListener;
@@ -31,6 +35,7 @@ public class SPButton extends Canvas implements SPWidget, SPPart {
 	public SPButton(SpotifyWindow host)
 	{
 		mHost=host;
+		addMouseListener(new SPMouseListener());
 	}
 	
 	@Override
@@ -42,7 +47,7 @@ public class SPButton extends Canvas implements SPWidget, SPPart {
 		drawButton(c,arg0);
 		if(mLabel != null)
 		{
-			getContext().getSkin().drawText(mLabel,getContext().getSkin().getForeColor(), arg0,getLocation().x+getWidth()/4, getLocation().y+getHeight()/4, new Color(0xffffff));
+			getContext().getSkin().drawText(mLabel,new Color(0x777777), arg0,getLocation().x+getWidth()/4, getLocation().y+getHeight()/3, new Color(0xcccccc));
 		} 
 		
 	} 
@@ -50,6 +55,44 @@ public class SPButton extends Canvas implements SPWidget, SPPart {
 	{
 		c.draw((Graphics2D)g, 0, 0, getWidth(), getHeight());
 	}
+	public class SPMouseListener implements MouseListener{
+		
+
+			
+			public void mouseClicked(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				((SPButton)arg0.getSource()).mClickListener.Click(arg0.getSource(), arg0);
+			}
+
+			
+			public void mouseEntered(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+		
+			public void mouseExited(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			
+			public void mousePressed(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				pressed=true;
+				repaint();
+			}
+
+		
+			public void mouseReleased(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				pressed=false;
+				repaint();
+			}
+			
+		};
+
+		
 	/**
 	 * 
 	 */
@@ -57,41 +100,7 @@ public class SPButton extends Canvas implements SPWidget, SPPart {
 
 	public SPButton() {
 		// TODO Auto-generated constructor stub
-		addMouseListener(new MouseListener(){
-
-			@Override
-			public void mouseClicked(MouseEvent arg0) {
-				// TODO Auto-generated method stub
-				((SPButton)arg0.getSource()).mClickListener.Click(arg0.getSource(), arg0);
-			}
-
-			@Override
-			public void mouseEntered(MouseEvent arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void mouseExited(MouseEvent arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void mousePressed(MouseEvent arg0) {
-				// TODO Auto-generated method stub
-				pressed=true;
-				repaint();
-			}
-
-			@Override
-			public void mouseReleased(MouseEvent arg0) {
-				// TODO Auto-generated method stub
-				pressed=false;
-				repaint();
-			}
-			
-		});
+		addMouseListener(new SPMouseListener());
 	}
 
 	boolean pressed = false;

@@ -14,11 +14,12 @@
  * limitations under the License.
  */
 package com.krikelin.spotifysource;
+import  com.krikelin.spotifysource.Activity;
 @SuppressWarnings("unused")
 public class Intent {
-	
+	 
 	private Class<?> activity;
-	private SPActivity sender;
+	private Activity sender;
 	private int action;
 		
 }

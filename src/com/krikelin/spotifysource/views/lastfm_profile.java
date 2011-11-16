@@ -23,7 +23,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.xml.sax.SAXException;
 
 import com.krikelin.spotifysource.ISPEntry;
-import com.krikelin.spotifysource.SPActivity;
+import com.krikelin.spotifysource.Activity;
 import com.krikelin.spotifysource.SPContentView;
 import com.krikelin.spotifysource.SPListView;
 import com.krikelin.spotifysource.SPScrollPane;
@@ -33,9 +33,9 @@ import com.krikelin.spotifysource.SpotifySearch;
 import com.krikelin.spotifysource.SpotifyWindow;
 import com.krikelin.spotifysource.URI;
 
-public class lastfm_profile extends SPActivity {
+public class lastfm_profile extends Activity {
 	/*public class Song extends SimpleEntry{
-		public Song(SPActivity mActivity, SPContentView mContentView, URI mUri,
+		public Song(Activity mActivity, SPContentView mContentView, URI mUri,
 				URI mAuthorUri, URI mCollectionUri, URI mPlaylistUri) {
 			super(mActivity, mContentView, mUri, mAuthorUri, mCollectionUri, mPlaylistUri);
 			// TODO Auto-generated constructor stub
@@ -101,7 +101,7 @@ public class lastfm_profile extends SPActivity {
 	private ArrayList<ISPEntry> user_songs;
 	public class Overview extends SPContentView{
 
-		public Overview(SPActivity activity, SpotifyWindow mContext) {
+		public Overview(Activity activity, SpotifyWindow mContext) {
 			super(activity, mContext);
 			
 			SPListView listView = new SPListView(new SPTableModel(user_songs), mContext);

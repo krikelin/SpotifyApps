@@ -34,7 +34,6 @@ public abstract class BufferedCanvas extends JComponent {
 	@Override 
 	public void paint(Graphics g)
 	{
-		super.paint(g);
 		/*dim = getSize();
 		mBufferedImage =  createImage(dim.width,dim.height);
 		bufferGraphics = mBufferedImage.getGraphics();
@@ -60,7 +59,6 @@ public abstract class BufferedCanvas extends JComponent {
 		
 		setBackground(mContext.getSkin().getBackgroundColor());
 		init();
-		repaint();
 	}
 	@Override
 	public void setSize(Dimension dim)

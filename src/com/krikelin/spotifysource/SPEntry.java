@@ -74,7 +74,7 @@ public class SPEntry extends BufferedCanvas implements SPElement, ISPEntry, SPWi
 	private static final long serialVersionUID = -7577469568854194029L;
 	private SpotifyWindow mContext;
 	private SPContentView mContentView;
-	private SPActivity mActivity;
+	private Activity mActivity;
 	private Float mPopularity;
 	private int mTrackNumber;
 	/**
@@ -120,7 +120,7 @@ public class SPEntry extends BufferedCanvas implements SPElement, ISPEntry, SPWi
 			getComponents()[i].setForeground(getForeground());
 		}
 	}
-	public SPEntry(SPContentView mContentView, SpotifyWindow mContext, SPActivity mActivity, URI uri)
+	public SPEntry(SPContentView mContentView, SpotifyWindow mContext, Activity mActivity, URI uri)
 	{
 		super(mActivity.getContext());
 		mMusicEntry=false;
@@ -133,7 +133,7 @@ public class SPEntry extends BufferedCanvas implements SPElement, ISPEntry, SPWi
 	{
 		this.mContentView=mHost;
 	}
-	public SPEntry(SPActivity mActivity,SPContentView mContentView, SpotifyWindow mContext,ISPEntry entry)
+	public SPEntry(Activity mActivity,SPContentView mContentView, SpotifyWindow mContext,ISPEntry entry)
 	{
 		
 		super(mContext);
@@ -531,7 +531,7 @@ public class SPEntry extends BufferedCanvas implements SPElement, ISPEntry, SPWi
 		}
 	}
 	@Override
-	public SPActivity getActivity() {
+	public Activity getActivity() {
 		// TODO Auto-generated method stub
 		return mActivity;
 	}
