@@ -106,7 +106,7 @@ public class SpotifyWindow extends JFrame implements Context, WindowListener {
 		}
 	}
 
-	private Hashtable<String, Class<Activity>> mashups = new Hashtable<>();
+	private Hashtable<String, Class<Activity>> mashups = new Hashtable<String, Class<Activity>>();
 	/**
 	 * Loads plugins from the desired folder to the arraylist
 	 * @param fileName
@@ -133,7 +133,7 @@ public class SpotifyWindow extends JFrame implements Context, WindowListener {
 				Thread.currentThread().setContextClassLoader(cl);
 		//	addClass(new java.net.URL("file://"+SPContainer.EXTENSION_DIR+"jar/"+package_name+".jar"));
 			
-				Class<Activity> sp_activity_type = (Class< Activity >) cl.loadClass(plugin);
+				Class sp_activity_type = (Class) cl.loadClass(plugin);
 				plugins.put(activity_name, sp_activity_type);
 			
 			}catch(Exception e){
@@ -568,7 +568,7 @@ public class SpotifyWindow extends JFrame implements Context, WindowListener {
 				}
 				mListModel.add(new SimpleEntry(icon, null, null, new URI(activity.getTitle(),"spotify:"+act.getSimpleName()+":default"), null, null, null));
 				
-			} catch (InstantiationException | IllegalAccessException e1) {
+			} catch (Exception e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}

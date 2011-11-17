@@ -19,8 +19,11 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 
+import org.lobobrowser.gui.FramePanel;
+
 import com.krikelin.spotifysource.BufferedContainer;
 import com.krikelin.spotifysource.Activity;
+import com.krikelin.spotifysource.SPContentView;
 import com.krikelin.spotifysource.SPLabel;
 import com.krikelin.spotifysource.SpotifyWindow;
 import com.krikelin.spotifysource.URI;
@@ -31,7 +34,7 @@ public class app extends Activity {
 	 * 
 	 */
 	private static final long serialVersionUID = -4138666058898342503L;
-	protected class Overview extends BufferedContainer {
+	protected class Overview extends SPContentView {
 
 		/**
 		 * 
@@ -39,10 +42,10 @@ public class app extends Activity {
 		private static final long serialVersionUID = -8899296963213710228L;
 
 		public Overview(Activity activity, SpotifyWindow mContext) {
-			super(mContext);
+			super(activity,mContext);
 			// TODO Auto-generated constructor stub
-			setLayout(new GridLayout(2, 1));
-			BufferedContainer panel = new BufferedContainer(mContext);
+	
+		/*	BufferedContainer panel = new BufferedContainer(mContext);
 			panel.setBackground(mContext.getSkin().getBackgroundColor());
 			SPLabel text = new SPLabel(mContext, app_description);
 			panel.setLayout(new BorderLayout());
@@ -51,7 +54,15 @@ public class app extends Activity {
 			((BorderLayout)panel.getLayout()).setVgap(10);
 			add(panel,BorderLayout.NORTH);
 			add(text,BorderLayout.CENTER);
-			text.setText(description);
+			text.setText(description);*/
+			FramePanel fp = new FramePanel();
+			add(fp);
+			try
+			{
+				fp.navigate("http://localhost/spotifysource/app.html");
+			}catch(Exception e){
+				
+			}
 		}
 		
 	}

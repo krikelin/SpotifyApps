@@ -48,9 +48,7 @@ public class ResourceManager {
 			InputStream is = getResource("drawable","png",res);
 			Image i = ImageIO.read(is);
 			return i;
-		} catch (ClassNotFoundException | IllegalArgumentException
-				| IllegalAccessException | IOException e) {
-			// TODO Auto-generated catch block
+		} catch(Exception e){
 			e.printStackTrace();
 		}
 		return null;

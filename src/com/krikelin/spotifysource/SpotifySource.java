@@ -14,10 +14,38 @@
  * limitations under the License.
  */
 package com.krikelin.spotifysource;
+
+import org.lobobrowser.main.PlatformInit;
+
+
 public class SpotifySource {
 
 	public static void main(String[] args)
 	{
+		// This optional step initializes logging so only warnings
+		// are printed out.
+		try {
+			PlatformInit.getInstance().initLogging(false);
+			PlatformInit.getInstance().init(false, false);
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+
+		// This step is necessary for extensions to work:
+		
+
+		// This optional step initializes logging so only warnings
+		// are printed out.
+		try { 
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	
+		// This step is necessary for extensions to work:
+		
+
 		SpotifyWindow mainWindow = new SpotifyWindow();
 		mainWindow.setVisible(true);
 		

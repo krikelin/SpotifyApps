@@ -204,6 +204,14 @@ public abstract class Activity extends Container implements Context, com.krikeli
 		
 	}
 	/**
+	 * Used for preprocessor directive
+	 * @param section the section the preprocessor should load
+	 * @return
+	 */
+	public Object[] createView(int section){
+		return null;
+	}
+	/**
 	 * Occurs on long drop
 	 * @param source
 	 */

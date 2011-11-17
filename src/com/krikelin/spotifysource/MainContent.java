@@ -30,13 +30,13 @@ public class MainContent extends BufferedContainer implements SPPart {
 		// TODO Auto-generated method stub
 		return mContext;
 	}
-	private JList<?> mList;
+	private JList mList;
 	
 	public MainContent(SpotifyWindow context)
 	{
 		super(context);
 		this.mContext=context;
-		mList = new JList<Object>();
+		mList = new JList();
 		mContainer = new SPContainer(getContext());
 		add(mContainer,BorderLayout.CENTER);
 		add(mList,BorderLayout.WEST);
@@ -52,11 +52,11 @@ public class MainContent extends BufferedContainer implements SPPart {
 		
 	}
 	
-	public void setList(JList<?> mList) {
+	public void setList(JList mList) {
 		this.mList = mList;
 	}
 
-	public JList<?> getList() {
+	public JList getList() {
 		return mList;
 	}
 

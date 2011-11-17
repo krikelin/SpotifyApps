@@ -25,12 +25,12 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.ListCellRenderer;
 
-public class SPTreeView extends JList<Object> {
-	public class SPCellRenderer implements ListCellRenderer<Object>
+public class SPTreeView extends JList {
+	public class SPCellRenderer implements ListCellRenderer
 	{
 
 		@Override
-		public Component getListCellRendererComponent(JList<?> arg0, Object arg1,
+		public Component getListCellRendererComponent(JList arg0, Object arg1,
 				int arg2, boolean arg3, boolean arg4) {
 			// TODO Auto-generated method stub
 			JPanel bc = new JPanel();

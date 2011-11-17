@@ -14,6 +14,16 @@
  * limitations under the License.
  */
 package com.krikelin.spotifysource.views;
+import javax.swing.*;
+
+import org.lobobrowser.gui.FramePanel;
+import org.lobobrowser.html.BrowserFrame;
+import org.lobobrowser.html.gui.HtmlPanel;
+
+import java.net.MalformedURLException;
+
+
+
 import com.krikelin.spotifysource.*;
 public class home extends Activity {
 	public class Overview extends SPContentView
@@ -27,6 +37,19 @@ public class home extends Activity {
 		public Overview()
 		{
 			super(home.this,home.this.getContext());
+			
+			// TODO Add another page provider
+			// This page is only internal as so long,
+			// so it wont work outside the dev
+			
+			FramePanel fp = new FramePanel();
+			add(fp);
+			try {
+				fp.navigate("http://localhost/spotifysource/home.html");
+			} catch (MalformedURLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		
 			setTexturedBackground(getContext().getSkin().getDashedBackground());
 			// Add an default image box

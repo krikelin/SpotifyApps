@@ -137,7 +137,7 @@ public class AppInstaller {
 	public static void main(String[] args){
 		try {
 			new AppInstaller().installApp(new File("C:\\twittify.jar"));
-		} catch (IOException | SAXException | ParserConfigurationException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

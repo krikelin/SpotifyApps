@@ -25,6 +25,7 @@ import javax.swing.table.TableModel;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
+import org.lobobrowser.gui.FramePanel;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -206,7 +207,15 @@ public class market extends Activity {
 		private static final long serialVersionUID = -1049366795495350915L;
 		public Overview(Activity activity, SpotifyWindow mContext,ArrayList<App> app_list) {
 			super(activity, mContext);
-			setTexturedBackground(getContext().getSkin().getDashedBackground());
+			//setTexturedBackground(getContext().getSkin().getDashedBackground());
+			FramePanel fp = new FramePanel();
+			add(fp);
+			try
+			{
+				fp.navigate("http://localhost/spotifysource/market.html");
+			}catch(Exception e){
+				
+			}
 		}
 		
 	}
@@ -223,7 +232,7 @@ public class market extends Activity {
 					new_apps.add(app);
 				}
 			}
-		} catch (SAXException | IOException | ParserConfigurationException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
