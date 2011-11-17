@@ -179,44 +179,44 @@ public class SpotifyPlayer implements IMCSource {
 			url = new URL(("http://127.0.0.1:4380/remote/play.json?pause=false&cors=&csrf=bf3334319b27abb77085a5602da59798&oauth=M2ZhY2Vib29rIGRyc291bmRzIDEwMzA3OTczOTM5MiAxMzIwNjc4MjA4IDEzMjA5Mzc0MDggAHPkfiqBQQ4XyGz8gShX7LKjzLu5PhwD6MFPxN7icwJZnKecZvd788UZp5zL2mV8nTdgg2bwY9asnyBO-RZJdwy-N_8MxICrboMEClOhUJlXw3NPtkB_DJfSt5S4O5nu4gBChaeTs4uoLnqDLJ63MDnwebEoG1p6xZQGanEtG8iEcTVce97Kg94&button_id=uoqj9o_49&song="+sp_uri+"&appear_source=999&uri=" +sp_uri));
 	//		JOptionPane.showMessageDialog(null, url.toString());
 			url.openStream();
-		} catch (MalformedURLException | UnsupportedEncodingException e2) {
+		} catch (MalformedURLException e2) {
 			// TODO Auto-generated catch block
-			e2.printStackTrace();		
+			e2.printStackTrace();	
+			
+		
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}	
-		if(false){
-			if(c == null)
-			{
-				Runtime run = Runtime.getRuntime();
-				Process pr = null;
-				
-					try {
-						pr = run.exec("C:\\Documents and Settings\\Alex\\Application Data\\Spotify\\Spotify.exe /uri " + resource.toFullPath());
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					
-				if(false){
-					c = new Timer();
-					c.schedule(new TimerTask(){
-			
-						@Override
-						public void run() {
-							// TODO Auto-generated method stub
-							if(mPlaybackListener!=null)
-							{
-								mPlaybackListener.playbackCompleted(resource);
-							}
-							c = null;
-						}
-						
-					}, 3000);
-				}
-			}
+
+		Runtime run = Runtime.getRuntime();
+		Process pr = null;
+		
+		try {
+			pr = run.exec("C:\\Users\\Alexander\\AppData\\Roaming\\Spotify\\Spotify.exe /uri " + resource.toFullPath());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+			
+		if(false){
+			c = new Timer();
+			c.schedule(new TimerTask(){
+	
+				@Override
+				public void run() {
+					// TODO Auto-generated method stub
+					if(mPlaybackListener!=null)
+					{
+						mPlaybackListener.playbackCompleted(resource);
+					}
+					c = null;
+				}
+				
+			}, 3000);
+		}
+			
+		
 	}
 	private Timer c;
 	private IMCPlaybackEventListener mPlaybackListener;

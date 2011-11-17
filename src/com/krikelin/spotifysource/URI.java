@@ -162,6 +162,9 @@ public class URI {
 	{
 		try{
 			this.setTitle(title);
+			uri = uri.replace("http://","");
+			uri = uri.replace("/", ":");
+			uri = uri.replace("open.spotify.com", "spotify");
 			String[] c = uri.split(":");
 			this.mAdress=c[0];
 			this.mApplication=c[1];
@@ -176,7 +179,7 @@ public class URI {
 	}
 	public String toFullPath() 
 	{
-		String result = "http://"+mDomain+"/";
+		String result = mDomain.startsWith("http://") ? mDomain : "http://"+mDomain+"/";
 		result+=mApplication;
 		result+="/"+getParameter().replace(":","/");
 		return result; 

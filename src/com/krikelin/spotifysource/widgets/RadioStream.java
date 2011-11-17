@@ -25,8 +25,10 @@ public class RadioStream extends SPContentView implements StreamContainer {
 	private Stack<ISPEntry> previous = new Stack<ISPEntry>();
 	private ISPEntry currentEntry;
 	private Stack<ISPEntry> forward = new Stack<ISPEntry>();
+	private SpotifyWindow context;
 	public RadioStream(Activity act, SpotifyWindow mContext) {
 		super(act, mContext);
+		this.context = mContext;
 		addMouseListener(new MouseListener() {
 			
 			@Override
@@ -70,23 +72,25 @@ public class RadioStream extends SPContentView implements StreamContainer {
 						previous.push(RadioStream.this.currentEntry);
 						RadioStream.this.currentEntry = forward.pop();
 					
-						currentEntry.play();
+						context.playSong(currentEntry);
 						
 						// if the item were the last one, raise on latest listener
-						if(onChangeListener!= null){
-							onChangeListener.onLastItemClicked(RadioStream.this, (ISPEntry)currentEntry);
+						if( i == forward.size() - 1){
+							if(onChangeListener!= null){
+								onChangeListener.onLastItemClicked(RadioStream.this, (ISPEntry)currentEntry);
+							}
 						}
 					}
 				}
 				// Create entries for previous entry
 				for(int i=0; i < previous.size(); i++){
-					int startX= (-i-1)*height+middle ;
-					int endX =(-i)*height+middle;
-					if(relX <startX   &&relX > endX ){	
+					int startX= (-i-1)*height ;
+					int endX =(-i)*height;
+					if(relX > startX   &&relX < endX ){	
 						forward.push(RadioStream.this.currentEntry);
 						RadioStream.this.currentEntry = previous.pop();
 						
-						currentEntry.play();
+						context.playSong(currentEntry);
 						
 					}
 					
@@ -113,11 +117,14 @@ public class RadioStream extends SPContentView implements StreamContainer {
 		
 	}
 	protected void drawEntry(int minus_x, Graphics g,ISPEntry entry){
-		
-		Color fore_color = this.getContext().getSkin().getForeColor();
-		this.getContext().getSkin().drawText(entry.getUri().getTitle(), fore_color, g, minus_x+getHeight()/2, this.getHeight() - g.getFont().getSize() - 50, true);
-		if(entry.getCover() != null){
-			g.drawImage(entry.getCover(), minus_x + this.getHeight() /2, 2, minus_x - 20, minus_x - 20, null);
+		try{
+			Color fore_color = this.getContext().getSkin().getForeColor();
+			this.getContext().getSkin().drawText(entry.getUri().getTitle(), fore_color, g, minus_x+getHeight()/2, this.getHeight() - g.getFont().getSize() - 50, true);
+			if(entry.getCover() != null){
+				g.drawImage(entry.getCover(), minus_x + this.getHeight() /2, 2, minus_x - 20, minus_x - 20, null);
+				
+			}
+		}catch(Exception e){
 			
 		}
 	}

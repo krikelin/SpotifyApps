@@ -34,6 +34,6 @@ public class SPScrollPane extends JScrollPane {
 	public SPScrollPane(Activity activity,Component c){
 		super(c);
 		this.getViewport().setBackground(activity.getContext().getSkin().getBackgroundColor());
-		
+		setBorder(BorderFactory.createEmptyBorder());
 	}
 }

@@ -3,6 +3,7 @@ package com.krikelin.spotifysource;
 import java.awt.Dimension;
 import java.net.URL;
 
+import javax.swing.BorderFactory;
 import javax.swing.JComponent;
 
 import org.lobobrowser.gui.FramePanel;
@@ -32,8 +33,9 @@ public class SPWebBrowser extends FramePanel implements SPWidget {
 	}
 	public SPWebBrowser(String url,SpotifyWindow window,JComponent parent, int height){
 		super();
+		setBorder(BorderFactory.createEmptyBorder());
 		if(height > -1){
-			setPreferredSize(new Dimension(640,height));
+			setPreferredSize(new Dimension(640,-1));
 		}
 		this.addNavigationListener(new NavigationListener() {
 			@Override
