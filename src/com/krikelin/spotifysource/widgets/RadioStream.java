@@ -9,6 +9,8 @@ import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
 import java.util.Stack;
 
+import javax.swing.SwingUtilities;
+
 
 import com.krikelin.spotifysource.*;
 
@@ -21,11 +23,13 @@ public class RadioStream extends SPContentView implements StreamContainer {
 	{
 		public void onLastItemClicked(RadioStream src, ISPEntry entry);
 		public void onFirstItemClicked(RadioStream src, ISPEntry entry);
+		public ArrayList<ISPEntry> fetchNewItems(RadioStream src);
 	}
 	private OnChangeEventHandler onChangeListener;
 	private static final long serialVersionUID = 6085856738073533924L;
 	int position = 0;
 	private ISPEntry currentEntry;
+	private ArrayList<ISPEntry> newItems = new ArrayList<ISPEntry>();
 	private ArrayList<ISPEntry> playlist = new ArrayList<ISPEntry>();
 	private SpotifyWindow context;
 	public RadioStream(Activity act, SpotifyWindow mContext) {
@@ -86,6 +90,29 @@ public class RadioStream extends SPContentView implements StreamContainer {
 							if(onChangeListener!= null){
 								onChangeListener.onLastItemClicked(RadioStream.this, (ISPEntry)currentEntry);
 							}
+							
+							// Fetch new items
+							Thread c = new Thread(new Runnable(){
+
+								@Override
+								public void run() {
+									// TODO Auto-generated method stub
+									newItems = getOnChangeListener().fetchNewItems(RadioStream.this);
+									SwingUtilities.invokeLater(new Runnable(){
+
+										@Override
+										public void run() {
+											// TODO Auto-generated method stub
+											playlist.addAll(newItems);
+											newItems.clear();
+											repaint();
+										}
+										
+									});
+								}
+								
+							});
+							c.start();
 						}
 					}
 				}
@@ -95,6 +122,7 @@ public class RadioStream extends SPContentView implements StreamContainer {
 			}
 			
 		});
+		
 		// TODO Auto-generated constructor stub
 		addMouseMotionListener(new MouseMotionListener() {
 			
