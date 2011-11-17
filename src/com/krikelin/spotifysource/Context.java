@@ -19,5 +19,6 @@ public interface Context {
 	 * @return
 	 */
 	public Enumeration<URL> getLocalResources(String type);
+//	public void navigate(URI uri);
 	
 }

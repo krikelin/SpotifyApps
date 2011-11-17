@@ -16,7 +16,16 @@
 package com.krikelin.spotifysource;
 
 import java.awt.Image;
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
+
+import Spotify.Track;
+
+import com.google.code.jspot.Spotify;
 
 
 public class SimpleEntry implements ISPEntry {
@@ -47,6 +56,71 @@ public class SimpleEntry implements ISPEntry {
 		this.mCollectionUri=mCollectionUri;
 		this.mUri = mUri;
 		
+		
+	}
+	/**
+	 * Identify spotify link
+	 * @param link
+	 * @throws IOException 
+	 * @throws MalformedURLException 
+	 */
+	public String identifySpotifyLink(String link) throws MalformedURLException, IOException{
+		
+		try{
+			String startTag = "href=\""; // Start tag
+		
+			int startPos = link.indexOf("http://"); // Get the starting position of the open.spotify.com
+			int endPos = link.indexOf(" ",startPos); // Find the end of the link string
+			if(endPos == -1){
+				endPos = link.length();
+			}
+			String spotify_link = link.substring(startPos, endPos );
+			if(spotify_link.startsWith("http://t.co") || spotify_link.startsWith("http://bit.ly") || spotify_link.startsWith("http://spot.tm")){
+				URLConnection conn = new URL(spotify_link).openConnection();
+				conn.setRequestProperty("User-Agent", "curl/7.22.0 (amd64-pc-win32) libcurl/7.22.0 OpenSSL/0.9.8r zlib/1.2.5");
+            
+	            conn.connect();
+	            
+				for(int i=0; ; i++){
+					
+					String headerName = conn.getHeaderFieldKey(i);
+			 
+		        	spotify_link = conn.getURL().toString();
+		        	break;
+				       
+			       
+				}
+			
+			}
+			return spotify_link;
+		}catch(Exception e){
+			return null;
+		}
+	}
+	/**
+	 * Creates an ISPEntry from the tweet
+	 * @param mActivity
+	 * @param mContentView
+	 * @param tweet
+	 * @throws IOException 
+	 */
+	public SimpleEntry(Activity mActivity,SPContentView mContentView, String tweet) throws IOException{
+		
+		// Lookup the song
+		String link = identifySpotifyLink(tweet);
+		if(link == null){
+			throw new IOException();
+		}
+		Spotify spot = new Spotify();
+		try{
+			com.google.code.jspot.Track track = spot.lookupTrack(link);
+			this.mUri = (new URI(track.getName(),link));
+			this.mAuthorUri = (new URI(track.getArtistName(),track.getArtistId()));
+			this.mTrackNumber = (track.getTrackNumber());
+			this.mCollectionUri = new URI(track.getAlbum().getName(),track.getAlbum().getId());
+		}catch(Exception e){
+			
+		}
 		
 	}
 	public SimpleEntry(Activity mActivity,SPContentView mContentView,URI mUri,URI mAuthorUri,URI mCollectionUri,URI mPlaylistUri)

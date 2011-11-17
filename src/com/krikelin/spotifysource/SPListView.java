@@ -90,11 +90,14 @@ public class SPListView extends JTable implements SPWidget, SPPart {
 				
 				bgColor =  isSelected ?  SPListView.this.getContext().getSkin().getSelectionBg() : isPlaying ? SPListView.this.getContext().getSkin().getPlayingBg() : (((row % 2) == 0)  ? SPListView.this.getContext().getSkin().getBackgroundColor() : SPListView.this.getContext().getSkin().getAlternateBgColor() );
 				fgColor = isSelected ? SPListView.this.getContext().getSkin().getSelectionFg() :  isPlaying ? SPListView.this.getContext().getSkin().getPlayingFg() : SPListView.this.getContext().getSkin().getForeColor();
-			
-				// if is playing
-				if(column > 1 && sourceEntry.getAuthorUri().toLinkString() == "spotify:underfined")
-				{
-					fgColor = fgColor.darker();
+				try{
+					// if is playing
+					if(column > 1 && sourceEntry.getAuthorUri().toLinkString() == "spotify:underfined")
+					{
+						fgColor = fgColor.darker();
+					}
+				}catch(Exception e){
+					
 				}
 				/*
 				 * If the entry is popularity, draw popularity

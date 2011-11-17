@@ -651,7 +651,7 @@ public class SpotifyWindow extends JFrame implements Context, WindowListener {
 	}
 	/**
 	 * Navigates to an particular view
-	 * @param target
+	 * @param target 
 	 */
 	public void navigate(URI target)
 	{

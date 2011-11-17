@@ -42,14 +42,8 @@ public class home extends Activity {
 			// This page is only internal as so long,
 			// so it wont work outside the dev
 			
-			FramePanel fp = new FramePanel();
-			add(fp);
-			try {
-				fp.navigate("http://localhost/spotifysource/home.html");
-			} catch (MalformedURLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			SPWebBrowser fp = new SPWebBrowser("http://localhost/spotifysource/home.html", mContext, this,-1);
+			
 		
 			setTexturedBackground(getContext().getSkin().getDashedBackground());
 			// Add an default image box

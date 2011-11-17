@@ -3,7 +3,6 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
 	<classpathentry kind="lib" path="C:/Users/Alexander/Downloads/jawin-2.0-alpha1/jawin-2.0-alpha1/lib/jawin.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Alexander/Downloads/jspot.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Alexander/Downloads/jxp-1.6.1/jxp-1.6.1/jxp-1.6.1.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Alexander/Documents/js.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Alexander/Documents/cobra.jar"/>

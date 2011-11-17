@@ -36,6 +36,9 @@ import javax.swing.SwingUtilities;
  *
  */
 public abstract class Activity extends Container implements Context, com.krikelin.spotifysource.SPPart {
+	public void navigate(){
+		
+	}
 	protected SpotifyWindow mContext;
 	private SPTabBar mTabBar;
 	public String getTitle(){

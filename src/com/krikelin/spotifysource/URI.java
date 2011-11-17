@@ -160,16 +160,19 @@ public class URI {
 	 */
 	public URI(String title, String uri)
 	{
-		this.setTitle(title);
-		String[] c = uri.split(":");
-		this.mAdress=c[0];
-		this.mApplication=c[1];
-		this.mParameters=new String[uri.length()-2];
-		for(int i=2; i <  c.length ;i++)
-		{
-			mParameters[i]=c[i];
+		try{
+			this.setTitle(title);
+			String[] c = uri.split(":");
+			this.mAdress=c[0];
+			this.mApplication=c[1];
+			this.mParameters=new String[uri.length()-2];
+			for(int i=2; i <  c.length ;i++)
+			{
+				mParameters[i]=c[i];
+			}
+		}catch(Exception e){
+			e.printStackTrace();
 		}
-		
 	}
 	public String toFullPath() 
 	{

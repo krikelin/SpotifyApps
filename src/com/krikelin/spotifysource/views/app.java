@@ -25,8 +25,10 @@ import com.krikelin.spotifysource.BufferedContainer;
 import com.krikelin.spotifysource.Activity;
 import com.krikelin.spotifysource.SPContentView;
 import com.krikelin.spotifysource.SPLabel;
+import com.krikelin.spotifysource.SPWebBrowser;
 import com.krikelin.spotifysource.SpotifyWindow;
 import com.krikelin.spotifysource.URI;
+import com.krikelin.spotifysource.spml.SPWebView;
 
 public class app extends Activity {
 	String app_description;
@@ -55,14 +57,9 @@ public class app extends Activity {
 			add(panel,BorderLayout.NORTH);
 			add(text,BorderLayout.CENTER);
 			text.setText(description);*/
-			FramePanel fp = new FramePanel();
-			add(fp);
-			try
-			{
-				fp.navigate("http://localhost/spotifysource/app.html");
-			}catch(Exception e){
-				
-			}
+			final SPWebBrowser fp = new SPWebBrowser("http://localhost/spotifysource/app.html", mContext,this );
+			
+			
 		}
 		
 	}
