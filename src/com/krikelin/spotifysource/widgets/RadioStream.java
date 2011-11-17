@@ -2,9 +2,11 @@ package com.krikelin.spotifysource.widgets;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.List;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.util.ArrayList;
 import java.util.Stack;
 
 
@@ -22,9 +24,9 @@ public class RadioStream extends SPContentView implements StreamContainer {
 	}
 	private OnChangeEventHandler onChangeListener;
 	private static final long serialVersionUID = 6085856738073533924L;
-	private Stack<ISPEntry> previous = new Stack<ISPEntry>();
+	int position = 0;
 	private ISPEntry currentEntry;
-	private Stack<ISPEntry> forward = new Stack<ISPEntry>();
+	private ArrayList<ISPEntry> playlist = new ArrayList<ISPEntry>();
 	private SpotifyWindow context;
 	public RadioStream(Activity act, SpotifyWindow mContext) {
 		super(act, mContext);
@@ -59,42 +61,36 @@ public class RadioStream extends SPContentView implements StreamContainer {
 			public void mouseClicked(MouseEvent e) {
 				// TODO Auto-generated method stub
 				int height = getHeight() ;
-				int middle = getWidth()/2;
-				int relX = e.getX() -middle;
+				int middle = getWidth()/2 - height /2;
+				int relX = e.getX();
 				// draw middle entry
 				// Create entries for previous entry
-				for(int i=0; i < forward.size(); i++){
-					int startX = (i*height) ;
-					int endX = (i+1)*height;
+				int firstEntry = -position*height  + middle;
+				for(int i=0; i < playlist.size(); i++){
 					
+					
+					
+					int startX = firstEntry + i*height;
+					int endX = firstEntry + i*height + height;
 					if(relX <endX   &&relX > startX ){
 						
-						previous.push(RadioStream.this.currentEntry);
-						RadioStream.this.currentEntry = forward.pop();
-					
-						context.playSong(currentEntry);
-						
+						position  = i;
+						RadioStream.this.currentEntry = playlist.get(i);
+						try{
+							context.playSong(currentEntry);
+						}catch(Exception ex){
+							
+						}
 						// if the item were the last one, raise on latest listener
-						if( i == forward.size() - 1){
+						if( i == playlist.size() - 1){
 							if(onChangeListener!= null){
 								onChangeListener.onLastItemClicked(RadioStream.this, (ISPEntry)currentEntry);
 							}
 						}
 					}
 				}
-				// Create entries for previous entry
-				for(int i=0; i < previous.size(); i++){
-					int startX= (-i-1)*height ;
-					int endX =(-i)*height;
-					if(relX > startX   &&relX < endX ){	
-						forward.push(RadioStream.this.currentEntry);
-						RadioStream.this.currentEntry = previous.pop();
-						
-						context.playSong(currentEntry);
-						
-					}
-					
-				}
+				
+				
 				repaint();
 			}
 			
@@ -142,38 +138,24 @@ public class RadioStream extends SPContentView implements StreamContainer {
 		g.setColor(getContext().getSkin().getBackgroundColor().brighter());
 		g.fillRect(0, 15, getHeight(), getHeight()-30);
 		g.setColor(getForeground());
-		drawEntry(0,g,currentEntry);
-		// Create entries for previous entry
-		for(int i=0; i < previous.size(); i++){
-			minus_x -= height;
-			if(minus_x < 0){
-				drawEntry(minus_x, g, previous.get(i));
-				
-			}
-			
-		}
-		// Create entries for previous entry
 		
-		for(int i=0; i < forward.size(); i++){
-			minus_x += height;
-			if(minus_x > 0){
-				drawEntry(minus_x, g, forward.get(i));
+		// Create entries for previous entry
+		for(int i=0; i < playlist.size(); i++){
+			minus_x = ( -(position * height) + height * i);
+			
+			drawEntry(minus_x, g, playlist.get(i));
 				
-			}
+		
 			
 		}
+		
 		g.translate(-(middle-height/2), 0);
 		
 	}
 
-	public Stack<ISPEntry> getPrevious() {
-		return previous;
+	public ArrayList<ISPEntry> getPlaylist(){
+		return playlist;
 	}
-
-	public void setPrevious(Stack<ISPEntry> previous) {
-		this.previous = previous;
-	}
-
 	public ISPEntry getCurrentEntry() {
 		return currentEntry;
 	}
@@ -182,26 +164,20 @@ public class RadioStream extends SPContentView implements StreamContainer {
 		this.currentEntry = currentEntry;
 	}
 
-	public Stack<ISPEntry> getForward() {
-		return forward;
-	}
-
-	public void setForward(Stack<ISPEntry> forward) {
-		this.forward = forward;
-	}
 	@Override
 	public ISPEntry playNext() {
 		// TODO Auto-generated method stub
-		previous.push(this.currentEntry);
-		this.currentEntry = forward.pop();
+		position +=1;
+		this.currentEntry = playlist.get(position);
 		
 		return currentEntry;
 	}
 	@Override
 	public ISPEntry playPrevious() {
 		// TODO Auto-generated method stub
-		forward.push(this.currentEntry);
-		this.currentEntry = previous.pop();
+		position-=1;
+		playlist.get(position);
+		
 		return super.playPrevious();
 	}
 	@Override

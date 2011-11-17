@@ -23,6 +23,8 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
 
+import javax.swing.SwingUtilities;
+
 import Spotify.Track;
 
 import com.google.code.jspot.Spotify;
@@ -113,6 +115,7 @@ public class SimpleEntry implements ISPEntry {
 		}
 		Spotify spot = new Spotify();
 		try{
+			this.link = link;
 			com.google.code.jspot.Track track = spot.lookupTrack(link);
 			this.mUri = (new URI(track.getName(),link));
 			this.mAuthorUri = (new URI(track.getArtistName(),track.getArtistId()));
@@ -121,6 +124,24 @@ public class SimpleEntry implements ISPEntry {
 		}catch(Exception e){
 			
 		}
+		Runnable r = new Runnable() {
+			
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				downloadCoverArt();
+			}
+		};
+		
+		downloader = new Thread(r);
+		downloader.start();
+	}
+	private String link = "";
+	Thread downloader;
+	private void downloadCoverArt(){
+		
+		
+		
 		
 	}
 	public SimpleEntry(Activity mActivity,SPContentView mContentView,URI mUri,URI mAuthorUri,URI mCollectionUri,URI mPlaylistUri)
