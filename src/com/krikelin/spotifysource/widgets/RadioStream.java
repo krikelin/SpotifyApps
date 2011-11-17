@@ -1,6 +1,7 @@
 package com.krikelin.spotifysource.widgets;
 
 import java.awt.Color;
+import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.List;
 import java.awt.event.MouseEvent;
@@ -143,13 +144,14 @@ public class RadioStream extends SPContentView implements StreamContainer {
 	protected void drawEntry(int minus_x, Graphics g,ISPEntry entry){
 		try{
 			Color fore_color = this.getContext().getSkin().getForeColor();
-			this.getContext().getSkin().drawText(entry.getUri().getTitle(), fore_color, g, minus_x+getHeight()/2, this.getHeight() - g.getFont().getSize() - 50, true);
 			if(entry.getCover() != null){
-				g.drawImage(entry.getCover(), minus_x + this.getHeight() /2, 2, minus_x - 20, minus_x - 20, null);
+				g.drawImage(entry.getCover(), minus_x + 64, 64, this.getHeight() - 160, this.getHeight() - 160, null);
 				
 			}
-		}catch(Exception e){
+			this.getContext().getSkin().drawText(entry.getUri().getTitle(), fore_color, g, minus_x + 10, this.getHeight() - g.getFont().getSize() - 50, true);
 			
+		}catch(Exception e){
+			e.printStackTrace();
 		}
 	}
 	@Override

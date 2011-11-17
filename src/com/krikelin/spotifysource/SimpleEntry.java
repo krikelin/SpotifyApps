@@ -115,6 +115,8 @@ public class SimpleEntry implements ISPEntry {
 		}
 		Spotify spot = new Spotify();
 		try{
+			this.mActivity=mActivity;
+			this.mContentView = mContentView;
 			this.link = link;
 			com.google.code.jspot.Track track = spot.lookupTrack(link);
 			this.mUri = (new URI(track.getName(),link));
@@ -272,6 +274,9 @@ public class SimpleEntry implements ISPEntry {
 	@Override
 	public Image getCover() {
 		// TODO Auto-generated method stub
+		if(cover == null){
+			return getActivity().getContext().getSkin().getReleaseImage();
+		}
 		return cover;
 	}
 	@Override
