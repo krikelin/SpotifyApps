@@ -199,22 +199,22 @@ public class SpotifyPlayer implements IMCSource {
 			e.printStackTrace();
 		}
 			
-		if(false){
-			c = new Timer();
-			c.schedule(new TimerTask(){
 	
-				@Override
-				public void run() {
-					// TODO Auto-generated method stub
-					if(mPlaybackListener!=null)
-					{
-						mPlaybackListener.playbackCompleted(resource);
-					}
-					c = null;
+		c = new Timer();
+		c.schedule(new TimerTask(){
+
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				if(mPlaybackListener!=null)
+				{
+					mPlaybackListener.playbackCompleted(resource);
 				}
-				
-			}, 3000);
-		}
+				c = null;
+			}
+			
+		}, 180000);
+	
 			
 		
 	}

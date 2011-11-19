@@ -1,6 +1,7 @@
 package com.krikelin.spotifysource.widgets;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.List;
@@ -65,6 +66,9 @@ public class RadioStream extends SPContentView implements StreamContainer {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				// TODO Auto-generated method stub
+				if(e.getClickCount() != 2){
+					return;
+				}
 				int height = getItemWidth() ;
 				int middle = getWidth()/2 - height /2;
 				int relX = e.getX();
@@ -82,9 +86,11 @@ public class RadioStream extends SPContentView implements StreamContainer {
 						position  = i;
 						RadioStream.this.currentEntry = playlist.get(i);
 						try{
+							context.setCurrentPlaylist(RadioStream.this);
 							context.playSong(currentEntry);
-						}catch(Exception ex){
 							
+						}catch(Exception ex){
+							ex.printStackTrace();
 						}
 						// if the item were the last one, raise on latest listener
 						if( i == playlist.size() - 1){
@@ -145,11 +151,14 @@ public class RadioStream extends SPContentView implements StreamContainer {
 		try{
 			Color fore_color = this.getContext().getSkin().getForeColor();
 			if(entry.getCover() != null){
-				g.drawImage(entry.getCover(), minus_x + 10, 10,(int)(getItemWidth()*0.8) , (int)(this.getItemWidth()*0.8) , null);
+				g.drawImage(entry.getCover(), minus_x + 20, 10,(int)(getItemWidth()*0.8) , (int)(this.getItemWidth()*0.8) , null);
 				
 			}
-			this.getContext().getSkin().drawText(SPSkin.stripe( entry.getUri().getTitle(),15), fore_color, g, minus_x + 10, this.getHeight() - g.getFont().getSize() - 50, true);
-			this.getContext().getSkin().drawText(SPSkin.stripe( entry.getAuthorUri().getTitle(),15), fore_color, g, minus_x + 10, this.getHeight() - g.getFont().getSize() - 20, true);
+			Font oldFont = g.getFont();
+			g.setFont(new Font("Tahoma",Font.BOLD,14));
+			this.getContext().getSkin().drawText(SPSkin.stripe( entry.getUri().getTitle(),(int)(getItemWidth()*0.8),g.getFont(),g), fore_color, g, minus_x + 10, this.getHeight() - g.getFont().getSize() -60, true);
+			g.setFont(new Font(oldFont.getFamily(),Font.PLAIN,oldFont.getSize()));
+			this.getContext().getSkin().drawText(SPSkin.stripe( entry.getAuthorUri().getTitle(),(int)(getItemWidth()*0.8),g.getFont(),g), fore_color, g, minus_x + 10, this.getHeight() - g.getFont().getSize() - 20, true);
 			
 		}catch(Exception e){
 			e.printStackTrace();
@@ -203,16 +212,17 @@ public class RadioStream extends SPContentView implements StreamContainer {
 		// TODO Auto-generated method stub
 		position +=1;
 		this.currentEntry = playlist.get(position);
-		
+		repaint();
 		return currentEntry;
 	}
 	@Override
 	public ISPEntry playPrevious() {
 		// TODO Auto-generated method stub
 		position-=1;
-		playlist.get(position);
+		this.currentEntry = playlist.get(position);
+		repaint();
+		return this.currentEntry;
 		
-		return super.playPrevious();
 	}
 	@Override
 	public ISPEntry getCurrentPlayingEntry() {

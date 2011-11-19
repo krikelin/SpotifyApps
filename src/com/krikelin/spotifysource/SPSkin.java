@@ -17,6 +17,7 @@ package com.krikelin.spotifysource;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Image;
 
@@ -43,6 +44,19 @@ public abstract class SPSkin {
 			return src.substring(0,count)+"...";
 		}
 		return src;
+	}
+	public static String stripe(String src,int width, Font font, Graphics g){
+		
+		int xwidth = 0;
+		for(int i=0; i< src.length() ; i++){
+			xwidth+=g.getFontMetrics(font).charWidth(src.charAt(i));
+			if(xwidth > width){
+				return src.substring(0, i)+"...";
+			}
+		}
+		
+		return src;
+
 	}
 	/**
 	 * Get css

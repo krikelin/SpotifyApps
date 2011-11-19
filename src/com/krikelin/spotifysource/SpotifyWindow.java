@@ -193,7 +193,14 @@ public class SpotifyWindow extends JFrame implements Context, WindowListener {
 	 * @author Alexander
 	 *
 	 */
-	
+	public boolean isAppInstalled(String pkg){
+		for(String pack : getPlugins()){
+			if(pack.equals(pkg)){
+				return true;
+			}
+		}
+		return false;
+	}
 	public Hashtable<String, IMCSource> getMediaSources() {
 		return mMediaSources;
 	}
@@ -228,12 +235,13 @@ public class SpotifyWindow extends JFrame implements Context, WindowListener {
 	{
 		ISPEntry e = getCurrentPlayingEntry();
 		mPrimaryMediaSource.stop();
-		for(int i=0; i < getCurrentPlaylist().getEntries().size(); i++)
+		playSong(getCurrentPlaylist().playNext());
+	/*	for(int i=0; i < getCurrentPlaylist().getEntries().size(); i++)
 		{
 			ISPEntry entry = getCurrentPlaylist().getEntries().get(i);
-			/**
-			 * Play the next entry
-			 */
+		
+			// Play the next entry
+			
 			if(entry.equals(e))
 			{
 				try
@@ -246,18 +254,22 @@ public class SpotifyWindow extends JFrame implements Context, WindowListener {
 					
 				}
 			}
-		}
+		}*/
+		
 	}
 	public void playPrevious()
 	{
 		ISPEntry e = getCurrentPlayingEntry();
 		mPrimaryMediaSource.stop();
-		for(int i=0; i < getCurrentPlaylist().getEntries().size(); i++)
+		playSong(getCurrentPlaylist().playNext());
+	/*	for(int i=0; i < getCurrentPlaylist().getEntries().size(); i++)
+	 * 
+	
 		{
 			ISPEntry entry = getCurrentPlaylist().getEntries().get(i);
-			/**
-			 * Play the next entry
-			 */
+			
+			// Play the next entry
+		
 			if(entry.equals(e))
 			{
 				try
@@ -271,6 +283,7 @@ public class SpotifyWindow extends JFrame implements Context, WindowListener {
 				}
 			}
 		}
+		 */
 	}
 	private ISPEntry mCurrentPlayingEntry;
 	public ISPEntry getCurrentPlayingEntry() {
@@ -451,7 +464,7 @@ public class SpotifyWindow extends JFrame implements Context, WindowListener {
 		mListModel = new ArrayList<ISPEntry>();
 		mList = new SPTreeView(this,mListModel); 
 		mPrimaryMediaSource = new com.krikelin.mediasource.SpotifyPlayer();
-		getMediaSources().put("spotify", new com.krikelin.mediasource.SpotifyPlayer());
+		getMediaSources().put("spotify", mPrimaryMediaSource);
 		getMediaSources().get("spotify").setPlaybackListener(new IMCPlaybackEventListener(){
 
 			@Override

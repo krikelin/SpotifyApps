@@ -17,14 +17,19 @@ package com.krikelin.spotifysource;
 import java.io.BufferedWriter;
 import java.io.DataInputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.URL;
 import java.util.jar.JarEntry;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
+import org.apache.commons.io.IOUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -33,6 +38,13 @@ import org.xml.sax.SAXException;
 
 
 public class AppInstaller {
+	private URL url;
+	public AppInstaller(URL url){
+		this.url = url;
+	}
+	public AppInstaller(File fil){
+		this.app_jar = fil;
+	}
 	protected void copyFile(String src,String dest) throws IOException{
 		File inputFile = new File(src);
 	    File outputFile = new File(dest);
@@ -82,9 +94,37 @@ public class AppInstaller {
 		bw.write("\n"+file);
 		bw.close();
 	}
+	
+	public static final int size = 1024;
+	protected File downloadJar(URL file) throws IOException{
+		// TODO FIx this later!!!!
+		
+		
+		// Download the Jar file {
+		
+		InputStream in = file.openStream();
+		File c = new File(SPContainer.EXTENSION_DIR+"\\jar\\"+file.getFile().split("/")[file.getFile().split("/").length-1]);
+		c.createNewFile();
+		FileOutputStream fos = new FileOutputStream(c);
+	
+		this.app_jar = c;
+		return c;
+		// }
+		
+		
+	}
 	public static String xmlns = "http://spotiapps/";
 	public static final String tmp_dir = "C:\\temp\\";
-	public void installApp(File app_jar) throws IOException, SAXException, ParserConfigurationException{
+	private File app_jar;
+	public void install() throws IOException, SAXException, ParserConfigurationException{
+		if(url != null){
+			downloadJar(url);
+		}
+		if( this.app_jar != null){
+			installJar();
+		}
+	}
+	public void installJar() throws IOException, SAXException, ParserConfigurationException{
 
 	
 		java.util.jar.JarFile jar = new java.util.jar.JarFile(app_jar);
@@ -134,12 +174,10 @@ public class AppInstaller {
 		
 		
 	}
-	public static void main(String[] args){
-		try {
-			new AppInstaller().installApp(new File("C:\\twittify.jar"));
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	public URL getUrl() {
+		return url;
+	}
+	public void setUrl(URL url) {
+		this.url = url;
 	}
 }

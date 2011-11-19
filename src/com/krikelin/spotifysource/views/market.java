@@ -14,12 +14,20 @@
  * limitations under the License.
  */package com.krikelin.spotifysource.views;
 
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.io.DataInputStream;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.BorderFactory;
+import javax.swing.JSplitPane;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -33,64 +41,25 @@ import org.xml.sax.SAXException;
 
 
 import com.krikelin.spotifysource.Activity;
+import com.krikelin.spotifysource.App;
+import com.krikelin.spotifysource.AppInstaller;
+import com.krikelin.spotifysource.SPContainer;
 import com.krikelin.spotifysource.SPContentView;
 import com.krikelin.spotifysource.SPListView;
 import com.krikelin.spotifysource.SPScrollPane;
 import com.krikelin.spotifysource.SpotifyWindow;
 import com.krikelin.spotifysource.URI;
+import com.sun.xml.internal.ws.util.xml.XmlUtil;
 
 public class market extends Activity {
+	
 	private ArrayList<App> new_apps = new ArrayList<App>();
 	@SuppressWarnings("unused")
 	private ArrayList<App> top_apps = new ArrayList<App>();
-	
-	public class App{
-		public App() {
-			
-		}
-		public App(Element n){
-			name = n.getElementsByTagName("name").item(0).getFirstChild().getNodeValue();
-			author = n.getElementsByTagName("author").item(0).getFirstChild().getNodeValue();
-			category = n.getElementsByTagName("category").item(0).getFirstChild().getNodeValue();
-			version =  n.getElementsByTagName("version").item(0).getFirstChild().getNodeValue();
-			
-		}
-		private String name;
-		
-		private String author;
-		private String category;
-		private String version;
-		@Override
-		public String toString()
-		{
-			return this.name;
-		}
-		public String getName() {
-			return name;
-		}
-		public void setName(String name) {
-			this.name = name;
-		}
-		public String getAuthor() {
-			return author;
-		}
-		public void setAuthor(String author) {
-			this.author = author;
-		}
-		public String getCategory() {
-			return category;
-		}
-		public void setCategory(String category) {
-			this.category = category;
-		}
-		public String getVersion() {
-			return version;
-		}
-		public void setVersion(String version) {
-			this.version = version;
-		}
+	public void downloadApp(App app){
 		
 	}
+	
 	/***
 	 * Market table model
 	 * @author Alexander
@@ -102,7 +71,7 @@ public class market extends Activity {
 			this.apps= apps;
 		}
 		public final String[] COLUMN_NAME = new String[]{
-			"title","Author","Category","Version"
+			"State", "title","Author","Category","Version"
 		};
 		@Override
 		public void addTableModelListener(TableModelListener l) {
@@ -144,14 +113,16 @@ public class market extends Activity {
 			App app = (App)apps.get(rowIndex);
 			switch(columnIndex){
 			case 0:
-				return app;
+				return app.isInstalled() ? "Installed" : "";
 			case 1:
-				return app.author;
-				
+				return app;
 			case 2:
-				return app.version;
+				return app.getAuthor();
+				
 			case 3:
-				return app.category;
+				return app.getVersion();
+			case 4:
+				return app.getCategory();
 			default:
 				return "";
 			}
@@ -176,7 +147,7 @@ public class market extends Activity {
 		}
 		
 	}
-	public static final String MARKET_BASE = "http://localhost:64/myproject/spotiapps/market/";
+	public static final String MARKET_BASE = "http://localhost:64/myproject/spotiapps/";
 	/**
 	 * 
 	 */
@@ -192,10 +163,46 @@ public class market extends Activity {
 			super(activity, mContext);
 			this.apps= app_list;
 			// TODO Auto-generated constructor stub
-			SPListView v = new SPListView(new MarketTableModel(this.apps), mContext);
+			final SPListView v = new SPListView(new MarketTableModel(this.apps), mContext);
 			SPScrollPane jsp = new SPScrollPane(activity, v);
 			add(jsp);
 			jsp.setBorder(BorderFactory.createEmptyBorder());
+			v.addMouseListener(new MouseListener(){
+
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					// TODO Auto-generated method stub
+					if (e.getClickCount() == 2 && !e.isConsumed()) {
+						App app = (App)v.getModel().getValueAt(v.getSelectedRow(), 1);
+						app.download();
+					}
+				}
+
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+
+				@Override
+				public void mouseExited(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+
+				@Override
+				public void mousePressed(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+
+				@Override
+				public void mouseReleased(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+				
+			});
 		}
 		
 	}
@@ -219,16 +226,17 @@ public class market extends Activity {
 		}
 		
 	}
-	protected void downloadList(){
+	
+	protected void downloadList(String params,SpotifyWindow context){
 		
 		try {
-			URL c = new URL(MARKET_BASE+"list/1/");
+			URL c = new URL(MARKET_BASE+"list/"+params);
 			Document d = (Document)DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(c.openStream());
 			NodeList apps = d.getElementsByTagName("app");
 			for(int i=0; i < apps.getLength(); i++){
 				if(apps.item(i) instanceof Element)
 				{
-					App app = new App((Element)apps.item(i));
+					App app = new App((Element)apps.item(i), context);
 					new_apps.add(app);
 				}
 			}
@@ -241,7 +249,7 @@ public class market extends Activity {
 	@Override
 	public Object onLoad(URI args) {
 		// TODO Auto-generated method stub
-		downloadList();
+		downloadList("a/", getContext());
 		return null;
 	}
 
@@ -255,11 +263,10 @@ public class market extends Activity {
 	public void render(URI args, Object... result) {
 		// TODO Auto-generated method stub
 		if(args.getParameter().equals("")){
-			addPage("Overview", new Overview(this, getContext(),new_apps));
+
 			
 			addPage("Recommonded", new Home(this, getContext(),new_apps));
-			addPage("New apps", new Overview(this, getContext(),new_apps));
-			addPage("Top List", new SPContentView(this, getContext()));
+			
 			
 		}
 	}

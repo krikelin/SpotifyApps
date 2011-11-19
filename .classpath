@@ -8,5 +8,15 @@
 	<classpathentry kind="lib" path="C:/Users/Alexander/Documents/cobra.jar"/>
 	<classpathentry kind="lib" path="C:/Program Files (x86)/Lobo/lobo.jar"/>
 	<classpathentry kind="lib" path="C:/Program Files (x86)/Lobo/lobo-pub.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Alexander/Documents/Android/SpotifySource/lib/commons-fileupload-1.2.2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Alexander/Documents/Android/SpotifySource/lib/commons-io-2.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Alexander/Documents/Android/SpotifySource/lib/commons-io-2.1-javadoc.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Alexander/Documents/Android/SpotifySource/lib/commons-io-2.1-sources.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Alexander/Documents/Android/SpotifySource/lib/commons-codec-1.4.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Alexander/Documents/Android/SpotifySource/lib/commons-logging-1.1.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Alexander/Documents/Android/SpotifySource/lib/httpclient-4.1.2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Alexander/Documents/Android/SpotifySource/lib/httpclient-cache-4.1.2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Alexander/Documents/Android/SpotifySource/lib/httpcore-4.1.2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Alexander/Documents/Android/SpotifySource/lib/httpmime-4.1.2.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
