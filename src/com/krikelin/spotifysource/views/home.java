@@ -15,17 +15,20 @@
  */
 package com.krikelin.spotifysource.views;
 import javax.swing.*;
+import javax.xml.parsers.ParserConfigurationException;
 
 import org.lobobrowser.gui.FramePanel;
 import org.lobobrowser.html.BrowserFrame;
 import org.lobobrowser.html.gui.HtmlPanel;
+import org.xml.sax.SAXException;
 
+import java.io.IOException;
 import java.net.MalformedURLException;
 
 
 
 import com.krikelin.spotifysource.*;
-public class home extends Activity {
+public class home extends WebActivity {
 	public class Overview extends SPContentView
 	{
 		@SuppressWarnings("unused")
@@ -89,7 +92,18 @@ public class home extends Activity {
 	public void onCreate(URI referrer,SpotifyWindow context)
 	{	
 		super.onCreate( referrer, context);
-		addPage("Welcome", new Overview());
+		try {
+			createActivityFromXHTML("http://localhost:64/myproject/spotiapps/");
+		} catch (SAXException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ParserConfigurationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	
 		doLayout();
 	}

@@ -32,11 +32,17 @@ public class DefaultSkin extends SPSkin {
 	public void drawText(String str,Color colour, Graphics g,int x,int y,Color shadowColor)
 	{
 
+		drawText(str, colour, g, x, y, shadowColor,0,1);
+	}
+	@Override
+	public void drawText(String str,Color colour, Graphics g,int x,int y,Color shadowColor,int shdX,int shdY)
+	{
+
 		if(shadowColor != null)
 		{
 			// draw shadow
 			g.setColor(shadowColor);
-			g.drawString(str,x,y+1);
+			g.drawString(str,x+shdX,y+shdY);
 		}
 		// draw text
 		g.setColor(colour);
@@ -74,6 +80,7 @@ public class DefaultSkin extends SPSkin {
 	private Color mSelectionBg;
 	private Color mSelectionFg;
 	private Font mFont;
+	private Color mTabShadowColor;
 	/***
 	 * Gets pixel from an image
 	 * @param img
@@ -111,6 +118,7 @@ public class DefaultSkin extends SPSkin {
 	 */
 	public static final int IMG_SHADOW = 210081;
 	public static final int IMG_CHEADER = 28100;
+	public static final int COLOR_TAB_SHADOW = 7;
 	public DefaultSkin()
 	{
 		/*
@@ -146,8 +154,9 @@ public class DefaultSkin extends SPSkin {
 			 * 6,0 - Foreground color of active tab
 			 * 
 			 */
-			mTabForeground = getPixel(r,6,0);
-			mActiveTabForeColor = getPixel(r,7,0);
+			mTabForeground = getPixel(r,12,0);
+			mTabShadowColor = getPixel(r,11,0);
+			mActiveTabForeColor = getPixel(r,13,0);
 			mBackgroundColor = getPixel(r,1,0);
 			mShadowColor = getPixel(r,15,0);
 			mForeColor = getPixel(r,0,0);
@@ -195,6 +204,13 @@ public class DefaultSkin extends SPSkin {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	@Override
+	public String getCSS() {
+		// TODO Auto-generated method stub
+		
+		return "body{ background-color: #"+toHTMLColor(getBackgroundColor())+";}";
 	}
 	private Image dashedBg;
 	@Override
@@ -331,6 +347,8 @@ public class DefaultSkin extends SPSkin {
 		{
 		case DefaultSkin.IMG_VERTICAL_DIVIDER_FG:
 			return Color.white;
+		case DefaultSkin.COLOR_TAB_SHADOW:
+			return mTabShadowColor;
 		}
 		return null;
 	}

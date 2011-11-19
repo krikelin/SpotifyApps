@@ -65,7 +65,7 @@ public class RadioStream extends SPContentView implements StreamContainer {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				// TODO Auto-generated method stub
-				int height = getHeight() ;
+				int height = getItemWidth() ;
 				int middle = getWidth()/2 - height /2;
 				int relX = e.getX();
 				// draw middle entry
@@ -145,20 +145,24 @@ public class RadioStream extends SPContentView implements StreamContainer {
 		try{
 			Color fore_color = this.getContext().getSkin().getForeColor();
 			if(entry.getCover() != null){
-				g.drawImage(entry.getCover(), minus_x + 64, 64, this.getHeight() - 160, this.getHeight() - 160, null);
+				g.drawImage(entry.getCover(), minus_x + 10, 10,(int)(getItemWidth()*0.8) , (int)(this.getItemWidth()*0.8) , null);
 				
 			}
-			this.getContext().getSkin().drawText(entry.getUri().getTitle(), fore_color, g, minus_x + 10, this.getHeight() - g.getFont().getSize() - 50, true);
+			this.getContext().getSkin().drawText(SPSkin.stripe( entry.getUri().getTitle(),15), fore_color, g, minus_x + 10, this.getHeight() - g.getFont().getSize() - 50, true);
+			this.getContext().getSkin().drawText(SPSkin.stripe( entry.getAuthorUri().getTitle(),15), fore_color, g, minus_x + 10, this.getHeight() - g.getFont().getSize() - 20, true);
 			
 		}catch(Exception e){
 			e.printStackTrace();
 		}
 	}
+	public int getItemWidth(){
+		return (int)(getHeight() *0.75);
+	}
 	@Override
 	public void paint(Graphics g) {
 		super.paint(g);
 		// TODO Auto-generated method stub
-		int height = this.getHeight();
+		int height =getItemWidth();
 		
 		int middle = getWidth()/2;
 		g.translate(middle- height/2, 0);
@@ -166,7 +170,7 @@ public class RadioStream extends SPContentView implements StreamContainer {
 		int minus_x = -height;
 		// draw middle entry
 		g.setColor(getContext().getSkin().getBackgroundColor().brighter());
-		g.fillRect(0, 15, getHeight(), getHeight()-30);
+		g.fillRect(0, 1, getItemWidth(), getHeight()-10);
 		g.setColor(getForeground());
 		
 		// Create entries for previous entry

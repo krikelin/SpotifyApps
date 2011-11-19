@@ -63,12 +63,7 @@ public class SPTabBar extends com.krikelin.spotifysource.BufferedCanvas implemen
 	private int mX;
 	private int mHoveredIndex=0;
 	public void setActiveTab(int index){
-		mHoveredIndex = index;
-		try{
-			getOnTabChangeHandler().onTabChange(index, mTabs.get(index).Title);
-		}catch(Exception e){
-			e.printStackTrace();
-		}
+		setActiveTab(index, true);
 	}
 	/**
 	 * Adds an tab to the specified location
@@ -285,7 +280,7 @@ public class SPTabBar extends com.krikelin.spotifysource.BufferedCanvas implemen
 			}
 			else
 			{
-				getContext().getSkin().drawText(tab.Title,fgColor,g,left+card,16,new Color(0xcccccc));
+				getContext().getSkin().drawText(tab.Title,fgColor,g,left+card,16,getContext().getSkin().getColorById(DefaultSkin.COLOR_TAB_SHADOW),0,-1);
 				
 			}
 
@@ -389,6 +384,17 @@ public class SPTabBar extends com.krikelin.spotifysource.BufferedCanvas implemen
 	public JComponent findViewById(int id) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	public void setActiveTab(int index, boolean b) {
+		// TODO Auto-generated method stub
+		mSelectedIndex = index;
+		if(b){
+			try{
+				getOnTabChangeHandler().onTabChange(index, mTabs.get(index).Title);
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+		}
 	}
 
 }

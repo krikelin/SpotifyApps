@@ -25,6 +25,7 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import com.krikelin.mediasource.*;
@@ -48,6 +49,7 @@ import java.util.prefs.Preferences;
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JSplitPane;
+import javax.swing.JWindow;
 
 /***
  * The base for the Spotify window
@@ -408,12 +410,14 @@ public class SpotifyWindow extends JFrame implements Context, WindowListener {
 	{
 		mListModel.add(new SimpleEntry(null,null,uri,null,null,null));
 	}
-	
+	private int mouseOffsetX = 0;
+	private int mouseOffsetY = 0;
 	public SpotifyWindow()
 	{
 		
 		
-		super("Spotify Apps"); 
+		super(); 
+	//	setUndecorated(true);
 		try {
 			loadPlugins();
 		} catch (ClassNotFoundException e1) {
@@ -442,6 +446,7 @@ public class SpotifyWindow extends JFrame implements Context, WindowListener {
 				System.exit(0);
 			}
 		});
+		
 		// Set the fundamental layout
 		mListModel = new ArrayList<ISPEntry>();
 		mList = new SPTreeView(this,mListModel); 
@@ -458,6 +463,58 @@ public class SpotifyWindow extends JFrame implements Context, WindowListener {
 		});
 		mHeaderPanel = new HeaderPanel(this);
 		mHeaderPanel.setPreferredSize(new Dimension(0,50));
+mHeaderPanel.addMouseListener(new MouseListener() {
+			
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+				mouseOffsetX = e.getX();
+				mouseOffsetY = e.getY();
+			}
+			
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		mHeaderPanel.addMouseMotionListener(new MouseMotionListener() {
+			
+			@Override
+			public void mouseMoved(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseDragged(MouseEvent e) {
+				// TODO Auto-generated method stub
+				if(mouseOffsetX > 0 && mouseOffsetY > 0 ){
+					int currentX = getLocation().x;
+					int currentY = getLocation().y;
+					
+					setLocation( e.getXOnScreen() - mouseOffsetX, e.getYOnScreen() - mouseOffsetY);
+				}
+			}
+		});
 		this.add( mHeaderPanel,BorderLayout.NORTH);
 	
 		mViewContainer = new SPContainer(this);
@@ -519,6 +576,12 @@ public class SpotifyWindow extends JFrame implements Context, WindowListener {
 			}
 			
 		});
+		
+		mList.setBackground(getSkin().getBackgroundColor());
+		
+		/**
+		 * Add items to the jlist
+		 */
 		mHeaderPanel.setNavigateHandler(mHeaderPanel.new NavigateListener(){
 
 			@Override
@@ -535,12 +598,6 @@ public class SpotifyWindow extends JFrame implements Context, WindowListener {
 			}
 			
 		});
-		
-		mList.setBackground(getSkin().getBackgroundColor());
-		
-		/**
-		 * Add items to the jlist
-		 */
 		
 		mList.setPreferredSize(new Dimension(200,100));
 		//mJSplitPane.setLeftComponent(mList);

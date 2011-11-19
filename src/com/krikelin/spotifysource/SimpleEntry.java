@@ -16,14 +16,20 @@
 package com.krikelin.spotifysource;
 
 import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.DataInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
 
+import javax.imageio.ImageIO;
 import javax.swing.SwingUtilities;
+import javax.swing.text.html.HTMLDocument;
+import javax.swing.text.html.parser.Parser;
 
 import Spotify.Track;
 
@@ -138,9 +144,39 @@ public class SimpleEntry implements ISPEntry {
 		downloader = new Thread(r);
 		downloader.start();
 	}
+	/***
+	 * @bonus onFirstHit
+	 * @param string
+	 * @return
+	 * @throws IOException
+	 */
+	private  String downloadString(String string) throws IOException {
+		// TODO Auto-generated method stub
+		InputStream is = new URL(string).openStream();
+		DataInputStream i = new DataInputStream(is);
+		StringBuilder sb = new StringBuilder();
+		String c = "";
+		while((c = i.readLine()) != null){
+			sb.append(c);
+		}
+	
+		
+		return sb.toString();
+		
+	}
 	private String link = "";
 	Thread downloader;
 	private void downloadCoverArt(){
+		try {
+			String str = downloadString(getUri().toFullPath());
+			String address = str.substring(str.indexOf("http://o.scdn.co/image/"),str.indexOf("\"",str.indexOf("http://o.scdn.co/image/")));
+			InputStream in = new URL(address).openStream();
+			BufferedImage img = ImageIO.read(in);
+			this.cover = img;
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		
 		

@@ -22,12 +22,18 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
 import java.util.Enumeration;
 import java.util.HashMap;
 
 import javax.swing.SwingUtilities;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.w3c.dom.Document;
+import org.xml.sax.SAXException;
 
 /***
  * An Activity is an activity running inside Spotify Source
@@ -36,9 +42,13 @@ import javax.swing.SwingUtilities;
  *
  */
 public abstract class Activity extends Container implements Context, com.krikelin.spotifysource.SPPart {
+	public URI getUrl(){
+		return mUri;
+	}
 	public void navigate(){
 		
 	}
+	
 	protected SpotifyWindow mContext;
 	private SPTabBar mTabBar;
 	public String getTitle(){
@@ -47,6 +57,20 @@ public abstract class Activity extends Container implements Context, com.krikeli
 	public SPTabBar getTabBar()
 	{
 		return mTabBar;
+	}
+	private OnSectionChangedListener onSectionChangedListener;
+	/**
+	 * On section changed listener
+	 * @author Alexander
+	 *
+	 */
+	public interface OnSectionChangedListener{
+		/**
+		 * Occurs on changed section
+		 * @param newIndex
+		 */
+		public void onSectionChanged(int newIndex);
+		
 	}
 	/**
 	 * Denotates if the view can be filtered
@@ -268,6 +292,9 @@ public abstract class Activity extends Container implements Context, com.krikeli
 			public void onTabChange(int index, String title) {
 				// TODO Auto-generated method stub
 				Activity.this.cl.show(mViewStack, title);
+				if(getOnSectionChangedListener()!= null){
+					getOnSectionChangedListener().onSectionChanged(index);
+				}
 				
 			}
 			
@@ -322,5 +349,17 @@ public abstract class Activity extends Container implements Context, com.krikeli
 	public Enumeration<URL> getLocalResources(String type) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	public void setTab(int view) {
+		// TODO Auto-generated method stub
+		cl.show(mViewStack, mTabBar.getTabs().get(view).Title);
+		mTabBar.setActiveTab(view, false);
+		mTabBar.repaint();
+	}
+	public OnSectionChangedListener getOnSectionChangedListener() {
+		return onSectionChangedListener;
+	}
+	public void setOnSectionChangedListener(OnSectionChangedListener onSectionChangedListener) {
+		this.onSectionChangedListener = onSectionChangedListener;
 	}
 }

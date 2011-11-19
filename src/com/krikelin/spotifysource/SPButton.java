@@ -34,6 +34,7 @@ public class SPButton extends Canvas implements SPWidget, SPPart {
 	{
 		mHost=host;
 		addMouseListener(new SPMouseListener());
+	
 	}
 	
 	@Override

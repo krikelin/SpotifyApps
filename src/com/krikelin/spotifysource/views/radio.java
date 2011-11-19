@@ -50,11 +50,11 @@ public class radio extends Activity {
 			panel.add(Box.createVerticalGlue());
 			RadioStream rs = new RadioStream(radio.this, radio.this.getContext());
 			for(int i=0; i < 3; i++){
-				rs.getForward().push(new SimpleEntry( null, radio.this, this,new URI("Test "+i,"spotify:track:2"),null,null,null));
+				rs.getPlaylist().add(new SimpleEntry( null, radio.this, this,new URI("Test "+i,"spotify:track:2"),null,null,null));
 				
 			}
 			panel.add(rs);
-			rs.setCurrentEntry(rs.getForward().pop());
+			rs.setCurrentEntry(rs.getPlaylist().get(0));
 		}
 		
 		

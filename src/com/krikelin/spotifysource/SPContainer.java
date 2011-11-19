@@ -23,6 +23,8 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Stack;
 
+import com.krikelin.spotifysource.Activity.OnSectionChangedListener;
+
 
 /**
  * Container for various SPActivities
@@ -87,65 +89,44 @@ public class SPContainer  extends Container implements SPPart{
 	}
 	@SuppressWarnings("rawtypes")
 	Class[] loadedExtensions;
-	private Stack< Activity> mHistory = new Stack<Activity>();
-	private Stack< Activity> mFuture = new Stack<Activity>();
-	public Stack< Activity> getHistory()
+	private int backpos = 0;
+	private ArrayList<ViewMode> mHistory = new ArrayList<ViewMode>();
+
+	public ArrayList<ViewMode> getHistory()
 	{
 		return mHistory;
 	}
 	
-	public Stack< Activity> getFuture()
-	{
-		return mFuture; 
-	}
+	
 	public void goForward()
 	{
-		if(getHistory().size()> 0)
-		{
-			// Set current activity to future
-			getHistory().push(mCurrentPage);
-			
-			
-			// Get the previous page from the history
-			mCurrentPage = getFuture().pop();
-			
-			viewStack.show(this,mCurrentPage.getUri().toLinkString());
-		}
+		if(backpos < mHistory.size())
+			backpos++;
+		setHistoryPos(backpos);
 		
 	}
 	public void goBack()
 	{
-		if(getHistory().size() > 0)
-		{
-			// Set current activity to future
-			getFuture().push(mCurrentPage);
-			
-			
-			// Get the previous page from the history
-			mCurrentPage = getHistory().pop();
-			
-		
-			viewStack.show(this,mCurrentPage.getUri().toLinkString());
-			validate();
-			
-		}
+		if(backpos > -1)
+			backpos--;
+		setHistoryPos(backpos);
 		
 	}
+	private void setHistoryPos(int backpos){
+		Activity a  =  mHistory.get(backpos).getActivity();
+		viewStack.show(this,a.getUri().toLinkString());
+		mCurrentPage = a;
+		a.setTab(mHistory.get(backpos).getView());
+	}
 	private SpotifyWindow mContext;
+	
 	public void navigate(URI uri)
 	{
 		if(uri.getApplication().equals("track")){
 			mContext.playSong(new SimpleEntry(null, null, uri, null, null, null));
 			return;
 		}
-		getFuture().clear();
-		// Push current page to history and remove it from the stack
-		if(getCurrentPage()!=null)
-		{
-			getHistory().push(getCurrentPage());
-			
-			
-		}
+		
 		// If the view already exists in the stack, prefetch it
 		if(mActivities.get(uri.toLinkString()) != null)
 		{
@@ -227,11 +208,38 @@ public class SPContainer  extends Container implements SPPart{
 		activity.onCreate(uri, getContext());
 		add(activity,uri.toLinkString());
 		mActivities.put(uri.toLinkString(),activity);
+		mCurrentPage = activity;
 		viewStack.show(this,uri.toLinkString());
+		
+		// Watch tab changes
+		activity.setOnSectionChangedListener(new OnSectionChangedListener() {
+			
+			@Override
+			public void onSectionChanged(int newIndex) {
+				// TODO Auto-generated method stub
+				ViewMode vm = new ViewMode();
+				vm.setActivity(mCurrentPage);
+				vm.setView(newIndex);
+				addToHistory(vm);
+				
+			}
+		});
+		// Add to history
+		ViewMode vm = new ViewMode();
+		vm.setActivity(activity);
+		vm.setView(0);
+		addToHistory(vm);
 		validate();
+		
 		// Set current page to the new activity
+		
 		mCurrentPage=activity;
 		
+		
+	}
+	public void addToHistory(ViewMode vm){
+		getHistory().add(vm);
+		backpos = getHistory().size()-1;
 	}
 	CardLayout viewStack;
 	/**

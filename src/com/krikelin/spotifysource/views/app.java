@@ -57,7 +57,6 @@ public class app extends Activity {
 			add(panel,BorderLayout.NORTH);
 			add(text,BorderLayout.CENTER);
 			text.setText(description);*/
-			final SPWebBrowser fp = new SPWebBrowser("http://localhost/spotifysource/app.html", mContext,this );
 			
 			
 		}

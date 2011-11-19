@@ -38,6 +38,19 @@ public abstract class SPSkin {
 	public static final int MODE_PLAYING = 2001;
 	public static final int MODE_SELECTED = 2002;
 	public abstract Image getDashedBackground();
+	public static String stripe(String src,int count){
+		if(src.length() > count){
+			return src.substring(0,count)+"...";
+		}
+		return src;
+	}
+	/**
+	 * Get css
+	 * @return
+	 */
+	public String getCSS(){
+		return "";
+	}
 	/**
 	 * Draws popuarity
 	 * @param popularity
@@ -56,13 +69,28 @@ public abstract class SPSkin {
 		g.drawString(str,x,y+1);
 		
 	}
+	public void drawText(String str,Color color, Graphics g,int x,int y,Color shadowColor,int shadowX,int shadowY)
+	{
+	
+		drawText(str,color,g,x,y,Color.black);
+		
+	}
 	public void drawText(String str,Color color, Graphics g,int x,int y,boolean shadow)
 	{
 	
 		drawText(str,color,g,x,y,Color.black);
 		
 	}
-
+	/**
+	 * @from http://www.javalobby.org/java/forums/t19183.html
+	 * @param color
+	 * @return
+	 */
+	public String toHTMLColor(Color color){
+		String rgb = Integer.toHexString(color.getRGB());
+		rgb = rgb.substring(2, rgb.length());
+		return rgb;
+	}
 	/**
 	 * Get color from resource id
 	 * @param id
