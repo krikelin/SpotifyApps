@@ -135,17 +135,15 @@ public abstract class WebActivity extends Activity {
 							// HTML content
 							String htmlContent = innerXml(currentChild);
 							try {
-								writeString(htmlContent,"C:\\temppage.html");
-								SPScrollPane p = new SPScrollPane(this);
-								SPWebBrowser spb = new SPWebBrowser("C:\\temppage.html", getContext(), p, 320);
-								p.add(spb);
+								writeString(htmlContent, "C:\\temppage.html");
+							
+								SPWebBrowser spb = new SPWebBrowser("C:\\temppage.html", getContext(), null, 320);
 								
-								controlsToAdd.add(p);
 								
+								controlsToAdd.add(spb);
 							} catch (IOException e) {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
-								throw new IllegalAccessException();
 							}
 						}
 						

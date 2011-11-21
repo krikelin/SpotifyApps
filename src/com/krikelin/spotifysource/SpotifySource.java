@@ -17,6 +17,9 @@ package com.krikelin.spotifysource;
 
 import org.lobobrowser.main.PlatformInit;
 
+import chrriis.common.UIUtils;
+import chrriis.dj.nativeswing.swtimpl.NativeInterface;
+
 
 public class SpotifySource {
 
@@ -24,13 +27,8 @@ public class SpotifySource {
 	{
 		// This optional step initializes logging so only warnings
 		// are printed out.
-		try {
-			PlatformInit.getInstance().initLogging(false);
-			PlatformInit.getInstance().init(false, false);
-		} catch (Exception e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+		UIUtils.setPreferredLookAndFeel();
+	    NativeInterface.open();
 
 		// This step is necessary for extensions to work:
 		
@@ -44,9 +42,14 @@ public class SpotifySource {
 		}
 	
 		// This step is necessary for extensions to work:
+		SpotifyWindow mainWindow;
 		
-
-		SpotifyWindow mainWindow = new SpotifyWindow();
+		if(args.length >= 2){
+			mainWindow = new SpotifyWindow(new URI("spotify:"+args[1].replace("spotifyapp:","")));
+			System.out.println(args[1]);
+		}else{
+			mainWindow = new SpotifyWindow(null);
+		}
 		mainWindow.setVisible(true);
 		
 		 

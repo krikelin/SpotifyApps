@@ -23,6 +23,7 @@ import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
@@ -425,11 +426,25 @@ public class SpotifyWindow extends JFrame implements Context, WindowListener {
 	}
 	private int mouseOffsetX = 0;
 	private int mouseOffsetY = 0;
-	public SpotifyWindow()
+	public void centerScreen(){
+		// make the frame half the height and width
+	    Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+	    int height = screenSize.height;
+	    int width = screenSize.width;
+	    setSize(width/2, height/2);
+
+	    // center the jframe on screen
+	    setLocationRelativeTo(null);
+	    
+	    setVisible(true);
+	}
+	public SpotifyWindow(URI uri)
 	{
 		
 		
 		super(); 
+		// Get the size of the screen
+		centerScreen();
 	//	setUndecorated(true);
 		try {
 			loadPlugins();
@@ -542,6 +557,7 @@ mHeaderPanel.addMouseListener(new MouseListener() {
 			}
 			
 		});
+		
 		this.add(mJSplitPane,BorderLayout.CENTER);
 		mJSplitPane.setBorder(BorderFactory.createEmptyBorder());
 		mJSplitPane.setLeftComponent(mLeftPane);
@@ -622,7 +638,7 @@ mHeaderPanel.addMouseListener(new MouseListener() {
 		
 		
 		mListModel.add(new SimpleEntry(null,null,new URI("Home","spotify:home:a"),null,null,null));
-		mListModel.add(new SimpleEntry(null,null,new URI("Market","spotify:market"),null,null,null));
+		mListModel.add(new SimpleEntry(null,null,new URI("Radio","spotify:radio:year:0-3000"),null,null,null));
 		mListModel.add(new SimpleEntry(null,null,new URI("-","spotify:market"),null,null,null));
 		for(Class<Activity> act : getMashups().values()){
 			try {
@@ -632,7 +648,7 @@ mHeaderPanel.addMouseListener(new MouseListener() {
 				try
 				{
 					icon = activity.getIcon();
-				}
+				}	
 				catch(Exception e){
 					e.printStackTrace();
 				}
@@ -694,7 +710,13 @@ mHeaderPanel.addMouseListener(new MouseListener() {
 		loadUserData();
 		doLayout();
 		
+		// navigate to resource
+		if(uri != null){
+			navigate(uri);
+		}
+		
 	}
+	
 	/**
 	 * Adds an shortcut to the activity
 	 * @param name

@@ -210,7 +210,7 @@ public class DefaultSkin extends SPSkin {
 	public String getCSS() {
 		// TODO Auto-generated method stub
 		
-		return "body{ background-color: #"+toHTMLColor(getBackgroundColor())+";}";
+		return "body{color:#"+toHTMLColor(getForeColor())+"; background-color: #"+toHTMLColor(getBackgroundColor())+";}";
 	}
 	private Image dashedBg;
 	@Override

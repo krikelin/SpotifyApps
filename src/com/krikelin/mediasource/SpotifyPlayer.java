@@ -30,6 +30,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 import com.krikelin.spotifysource.IMCPlaybackEventListener;
+import com.krikelin.spotifysource.ISPEntry;
 
 import com.krikelin.spotifysource.URI;
 
@@ -41,7 +42,42 @@ public class SpotifyPlayer implements IMCSource {
 		// TODO Auto-generated method stub
 		return null;
 	}
- 
+	private URI currentSong;
+	private int position;
+
+	public SpotifyPlayer(){
+		c = new Timer();
+		c.scheduleAtFixedRate(new TimerTask(){
+
+			
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				if(playing){
+					if(position >= getDuration() - 2){
+						if(mPlaybackListener!=null)
+						{
+							mPlaybackListener.playbackCompleted( currentSong);
+						}
+					}
+					position++;
+				}
+
+			}
+
+			
+			
+		}, 0, 1000);
+	
+	}	
+	/**
+	 * Duration in seconds
+	 * @return
+	 */
+	private int getDuration() {
+		// TODO Auto-generated method stub
+		return 180	;
+	}
 	@Override
 	public URI rawFind(URI mediaSource) {
 		// TODO Auto-generated method stub
@@ -134,13 +170,13 @@ public class SpotifyPlayer implements IMCSource {
 	@Override
 	public int getCurrentPosition() {
 		// TODO Auto-generated method stub
-		return 0;
+		return position;
 	}
 
 	@Override
 	public URI getCurrentTrack() {
 		// TODO Auto-generated method stub
-		return null;
+		return currentSong;
 	}
 
 	@Override
@@ -166,7 +202,9 @@ public class SpotifyPlayer implements IMCSource {
 		// TODO Auto-generated method stub
 		return mPlaybackListener;
 	}
-
+	public void pause(){
+		playing = !playing;
+	}
 	@SuppressWarnings("unused")
 	@Override
 	public void play(final URI resource) {
@@ -199,25 +237,17 @@ public class SpotifyPlayer implements IMCSource {
 			e.printStackTrace();
 		}
 			
+		// Reset player handler
+		position = 0;
+		playing = true;
 	
-		c = new Timer();
-		c.schedule(new TimerTask(){
-
-			@Override
-			public void run() {
-				// TODO Auto-generated method stub
-				if(mPlaybackListener!=null)
-				{
-					mPlaybackListener.playbackCompleted(resource);
-				}
-				c = null;
-			}
-			
-		}, 180000);
+		
 	
 			
 		
 	}
+	private boolean playing = false;
+
 	private Timer c;
 	private IMCPlaybackEventListener mPlaybackListener;
 	@Override

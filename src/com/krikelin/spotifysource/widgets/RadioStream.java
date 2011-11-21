@@ -93,7 +93,7 @@ public class RadioStream extends SPContentView implements StreamContainer {
 							ex.printStackTrace();
 						}
 						// if the item were the last one, raise on latest listener
-						if( i == playlist.size() - 1){
+						if( i >= playlist.size() - 1){
 							if(onChangeListener!= null){
 								onChangeListener.onLastItemClicked(RadioStream.this, (ISPEntry)currentEntry);
 							}
@@ -145,20 +145,21 @@ public class RadioStream extends SPContentView implements StreamContainer {
 				
 			}
 		});
-		
+     		
 	}
 	protected void drawEntry(int minus_x, Graphics g,ISPEntry entry){
 		try{
 			Color fore_color = this.getContext().getSkin().getForeColor();
+			int imageRatio =(int)(getItemWidth()*0.8);
 			if(entry.getCover() != null){
 				g.drawImage(entry.getCover(), minus_x + 20, 10,(int)(getItemWidth()*0.8) , (int)(this.getItemWidth()*0.8) , null);
-				
+					
 			}
 			Font oldFont = g.getFont();
 			g.setFont(new Font("Tahoma",Font.BOLD,14));
-			this.getContext().getSkin().drawText(SPSkin.stripe( entry.getUri().getTitle(),(int)(getItemWidth()*0.8),g.getFont(),g), fore_color, g, minus_x + 10, this.getHeight() - g.getFont().getSize() -60, true);
+			this.getContext().getSkin().drawText(SPSkin.stripe( entry.getUri().getTitle(),(int)(getItemWidth()*0.8),g.getFont(),g), fore_color, g, minus_x + 10, 10 + imageRatio + 16, true);
 			g.setFont(new Font(oldFont.getFamily(),Font.PLAIN,oldFont.getSize()));
-			this.getContext().getSkin().drawText(SPSkin.stripe( entry.getAuthorUri().getTitle(),(int)(getItemWidth()*0.8),g.getFont(),g), fore_color, g, minus_x + 10, this.getHeight() - g.getFont().getSize() - 20, true);
+			this.getContext().getSkin().drawText(SPSkin.stripe( entry.getAuthorUri().getTitle(),(int)(getItemWidth()*0.8),g.getFont(),g), fore_color.darker(), g, minus_x + 10, 10 + imageRatio + 30, false);
 			
 		}catch(Exception e){
 			e.printStackTrace();
@@ -212,6 +213,12 @@ public class RadioStream extends SPContentView implements StreamContainer {
 		// TODO Auto-generated method stub
 		position +=1;
 		this.currentEntry = playlist.get(position);
+		if( position >= playlist.size() - 1){
+			if(onChangeListener!= null){
+				onChangeListener.onLastItemClicked(RadioStream.this, (ISPEntry)currentEntry);
+			}
+		}
+			
 		repaint();
 		return currentEntry;
 	}

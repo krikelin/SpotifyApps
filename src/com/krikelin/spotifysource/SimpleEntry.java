@@ -75,6 +75,16 @@ public class SimpleEntry implements ISPEntry {
 	public String identifySpotifyLink(String link) throws MalformedURLException, IOException{
 		
 		try{
+			// First try find the spotify:uri
+			try{
+				int start_pos = link.indexOf("spotify:");
+				int end_pos = link.indexOf(" ", start_pos) != -1 ? link.indexOf(" ", start_pos) : link.length();
+				String uri = link.substring(start_pos, end_pos);
+				return uri;
+			}
+			catch(Exception e){
+				
+			}
 			String startTag = "href=\""; // Start tag
 		
 			int startPos = link.indexOf("http://"); // Get the starting position of the open.spotify.com

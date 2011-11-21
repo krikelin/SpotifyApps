@@ -30,7 +30,7 @@ public class SPMLTest {
 	@SuppressWarnings("deprecation")
 	public static void main(String[] args){
 		JFrame frame = new JFrame();
-		SpotifyWindow sw = new SpotifyWindow();
+		SpotifyWindow sw = new SpotifyWindow(null);
 		SPWebView webview = new SPWebView(sw);
 		
 		frame.add(webview,BorderLayout.CENTER);
