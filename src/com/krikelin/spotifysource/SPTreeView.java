@@ -18,6 +18,7 @@ package com.krikelin.spotifysource;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.util.ArrayList;
 
@@ -26,6 +27,7 @@ import javax.swing.JPanel;
 import javax.swing.ListCellRenderer;
 
 public class SPTreeView extends JList {
+	
 	public class SPCellRenderer implements ListCellRenderer
 	{
 
@@ -33,25 +35,19 @@ public class SPTreeView extends JList {
 		public Component getListCellRendererComponent(JList arg0, Object arg1,
 				int arg2, boolean arg3, boolean arg4) {
 			// TODO Auto-generated method stub
-			JPanel bc = new JPanel();
 			SimpleEntry se = ((SimpleEntry)arg1);
-			ImageBox icon = new ImageBox(SPTreeView.this.getContext().getSkin().getImageById(DefaultSkin.ICON_START+1), SPTreeView.this.getContext());
-			if(se.getIcon() != null){
-				icon = new ImageBox(se.getIcon(), SPTreeView.this.getContext());
-			}
+			ListEntry bc = new ListEntry(((SimpleEntry)arg1).getUri().getTitle(), mContext, null);
+			
 			
 			bc.setLayout(null);
 			bc.setPreferredSize(new Dimension(200,16));
-			SPLabel c = new SPLabel(SPTreeView.this.mContext,"s");
-			c.setText(((SimpleEntry)arg1).getUri().getTitle());
 			Color bgColor =  arg3 ?   SPTreeView.this.getContext().getSkin().getSelectionBg(): SPTreeView.this.getContext().getSkin().getBackgroundColor();
 			bc.setBackground(bgColor);
-			c.setBackground(bgColor);
-			c.setColor( arg3 ?SPTreeView.this.getContext().getSkin().getSelectionFg()  :   SPTreeView.this.getContext().getSkin().getForeColor() );
-			c.setBounds(new Rectangle(16,0,100,32));
-			c.setShadow(!arg3);
-			bc.add(c);
-			add(icon);
+			bc.setForeground( arg3 ?SPTreeView.this.getContext().getSkin().getSelectionFg()  :   SPTreeView.this.getContext().getSkin().getForeColor() );
+			bc.setBounds(new Rectangle(16,0,100,32));
+			
+			
+			
 			return bc;
 		}
 		

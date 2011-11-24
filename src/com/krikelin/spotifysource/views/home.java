@@ -45,7 +45,7 @@ public class home extends WebActivity {
 			// This page is only internal as so long,
 			// so it wont work outside the dev
 			
-			SPWebBrowser fp = new SPWebBrowser("http://localhost/spotifysource/home.html", mContext, this,-1);
+			SPWebBrowser fp = new SPWebBrowser(SPContainer.EXTENSION_DIR+"html\\home.html", mContext, this,-1);
 			
 		
 			setTexturedBackground(getContext().getSkin().getDashedBackground());
@@ -93,7 +93,7 @@ public class home extends WebActivity {
 	{	
 		super.onCreate( referrer, context);
 		try {
-			createActivityFromXHTML("http://localhost:64/myproject/spotiapps/");
+			createActivityFromXHTML(SPContainer.EXTENSION_DIR+"\\html\\home.html");
 		} catch (SAXException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

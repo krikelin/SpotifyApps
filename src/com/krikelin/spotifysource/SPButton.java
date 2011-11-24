@@ -17,12 +17,15 @@ package com.krikelin.spotifysource;
 
 import java.awt.Canvas;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 import javax.swing.JComponent;
+
+import org.lobobrowser.html.style.FontStyleRenderState;
 
 import com.android.ninepatch.NinePatch;
 
@@ -46,7 +49,10 @@ public class SPButton extends Canvas implements SPWidget, SPPart {
 		drawButton(c,arg0);
 		if(mLabel != null)
 		{
-			getContext().getSkin().drawText(mLabel,new Color(0x777777), arg0,getLocation().x+getWidth()/4, getLocation().y+getHeight()/3, new Color(0xcccccc));
+			
+			getContext().getSkin().drawText(mLabel,new Color(0x777777), arg0,getWidth()/4, getLocation().y+getHeight()/3, new Color(0xcccccc));
+		
+			
 		} 
 		
 	} 

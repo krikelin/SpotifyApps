@@ -98,25 +98,27 @@ public class SPContainer  extends Container implements SPPart{
 	}
 	
 	
-	public void goForward()
+	public URI goForward()
 	{
 		if(backpos < mHistory.size())
 			backpos++;
-		setHistoryPos(backpos);
+		return setHistoryPos(backpos);
 		
 	}
-	public void goBack()
+	public URI goBack()
 	{
 		if(backpos > -1)
 			backpos--;
-		setHistoryPos(backpos);
+		return setHistoryPos(backpos);
+		
 		
 	}
-	private void setHistoryPos(int backpos){
+	private URI setHistoryPos(int backpos){
 		Activity a  =  mHistory.get(backpos).getActivity();
 		viewStack.show(this,a.getUri().toLinkString());
 		mCurrentPage = a;
 		a.setTab(mHistory.get(backpos).getView());
+		return a.getUri();
 	}
 	private SpotifyWindow mContext;
 	
@@ -169,9 +171,18 @@ public class SPContainer  extends Container implements SPPart{
 		 * Try load the class internally, otherwise load it
 		 * from the extension folder
 		 */
+			
 			try
 			{
-				activity = (Activity)Class.forName(	"com.krikelin.spotifysource.views."+uri.getApplication().toLowerCase()).newInstance();
+				try{
+					activity = (Activity)Class.forName(	"com.krikelin.spotifysource.views.thirdpart."+uri.getApplication().toLowerCase()).newInstance();
+					
+				}
+				catch(Exception e){
+					activity = (Activity)Class.forName(	"com.krikelin.spotifysource.views."+uri.getApplication().toLowerCase()).newInstance();
+						
+				}
+				
 			}
 			catch(Exception e)
 			{

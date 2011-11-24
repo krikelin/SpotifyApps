@@ -1,5 +1,6 @@
 package com.krikelin.spotifysource;
 
+import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.io.BufferedWriter;
 import java.io.DataOutputStream;
@@ -14,6 +15,7 @@ import java.util.Hashtable;
 import javax.lang.model.util.Elements;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
@@ -137,8 +139,16 @@ public abstract class WebActivity extends Activity {
 							try {
 								writeString(htmlContent, "C:\\temppage.html");
 							
-								SPWebBrowser spb = new SPWebBrowser("C:\\temppage.html", getContext(), null, 320);
-								
+								final SPWebBrowser spb = new SPWebBrowser("C:\\temppage.html", getContext(), null, 320);
+								spb.setPreferredSize(new Dimension(640,300));
+								SwingUtilities.invokeLater(new Runnable() {
+									
+									@Override
+									public void run() {
+										// TODO Auto-generated method stub
+										spb.navigate("C:\\temppage.html");
+									}
+								});
 								
 								controlsToAdd.add(spb);
 							} catch (IOException e) {
@@ -268,8 +278,12 @@ public abstract class WebActivity extends Activity {
 		// }
 		//
 		/// initialization{
+		try{
 			xmlDoc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(activity);
-			
+		}
+		catch(Exception e){
+			xmlDoc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse( new File(activity));
+		}
 			meta = new Hashtable<String, String>();
 			
 			

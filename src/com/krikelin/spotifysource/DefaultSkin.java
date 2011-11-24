@@ -199,6 +199,7 @@ public class DefaultSkin extends SPSkin {
 			
 			mPlaybackIconImage[0]= sliceBitmap(r,0,83,24,24);
 			mPlaybackIconImage[1]= sliceBitmap(r,0,83,24,24);
+			mIcons[0] = sliceBitmap(r,275,198, 14, 14);
 			mPlaybackIconImage[2]= sliceBitmap(r,0,83,24,24);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -210,7 +211,7 @@ public class DefaultSkin extends SPSkin {
 	public String getCSS() {
 		// TODO Auto-generated method stub
 		
-		return "body{color:#"+toHTMLColor(getForeColor())+"; background-color: #"+toHTMLColor(getBackgroundColor())+";}";
+		return "*{font-family:\"Tahoma\";}img{border:1px solid #333333; box-shadow: 2px 2px 12px #000000;} body{color:#"+toHTMLColor(getForeColor())+"; background-color: #"+toHTMLColor(getBackgroundColor())+";}";
 	}
 	private Image dashedBg;
 	@Override

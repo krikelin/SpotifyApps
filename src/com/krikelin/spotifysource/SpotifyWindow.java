@@ -23,6 +23,7 @@ import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.Insets;
 import java.awt.Toolkit;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -30,10 +31,14 @@ import java.awt.event.MouseMotionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import com.krikelin.mediasource.*;
+import com.krikelin.uility.SHWindow;
+
 import java.awt.event.WindowListener;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Method;
@@ -51,13 +56,14 @@ import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JSplitPane;
 import javax.swing.JWindow;
+import javax.swing.border.Border;
 
 /***
  * The base for the Spotify window
  * @author Alexander
  *
  */
-public class SpotifyWindow extends JFrame implements Context, WindowListener {
+public class SpotifyWindow extends SHWindow implements Context, WindowListener {
 	public String readString(String file) throws IOException{
 		
 		BufferedReader br = new BufferedReader(new FileReader(file));
@@ -108,7 +114,8 @@ public class SpotifyWindow extends JFrame implements Context, WindowListener {
 			throw new IOException("Error, could not add URL to system classloader");
 		}
 	}
-
+	private URI currentPlayingURI;
+	
 	private Hashtable<String, Class<Activity>> mashups = new Hashtable<String, Class<Activity>>();
 	/**
 	 * Loads plugins from the desired folder to the arraylist
@@ -130,7 +137,7 @@ public class SpotifyWindow extends JFrame implements Context, WindowListener {
 				package_name = package_name.replace("$.","");
 				String activity_name = parts[plugin.split("\\.").length - 1];
 				
-				File c = new File(SPContainer.EXTENSION_DIR+"\\jar\\"+package_name+".jar");
+				File c = new File(SPContainer.EXTENSION_DIR + "\\jar\\" + package_name + ".jar");
 				
 				URLClassLoader cl = new URLClassLoader(new URL[] { c.toURI().toURL() 	},Thread.currentThread().getContextClassLoader());	
 				Thread.currentThread().setContextClassLoader(cl);
@@ -154,7 +161,17 @@ public class SpotifyWindow extends JFrame implements Context, WindowListener {
 		setActivities(getMashups(readString(SPContainer.EXTENSION_DIR+"\\activities\\spotiapp.action.VIEW")));
 		setMashups(getMashups(readString(SPContainer.EXTENSION_DIR+"\\activities\\spotiapp.action.LIST")));
 		
+		// Read shortcatchs {
+		String c = readString(SPContainer.EXTENSION_DIR + "\\activities\\spotiapp.action.ENTRY");
+		String[]   clines = c.split("\n");
+		for(String line : clines){
+			String[] path = line.split("#",2);
+			URI uri = new URI(path[0],path[1]);
+			views.add(uri);
+		}
+		// }
 	}
+	private ArrayList<URI> views = new ArrayList<URI>();
 	public ArrayList<String> map(String str){
 		ArrayList<String> strings = new ArrayList<String>();
 		for(String stri : str.split("\n")){
@@ -615,21 +632,46 @@ mHeaderPanel.addMouseListener(new MouseListener() {
 
 			@Override
 			public void navigate(int mode) {
+				URI c;
 				// TODO Auto-generated method stub
 				if(mode == HeaderPanel.NavigateListener.MODE_BACK)
 				{
-					mViewContainer.goBack();
+					c = mViewContainer.goBack();
 				}
 				else
 				{
-					mViewContainer.goForward();
+					c = mViewContainer.goForward();
 				}
+				// Assert the selection here
+				for(int i=0;  i < mList.getModel().getSize(); i++){
+					ISPEntry entry = (ISPEntry)mList.getModel().getElementAt(i);
+					if(entry.getUri().equals(c)){
+						mList.setSelectedIndex(i);
+					}
+				}
+			}
+
+			@Override
+			public void saveView() {
+				// TODO Auto-generated method stub
+				URI c = mViewContainer.getCurrentPage().getUri();
+				try {
+					BufferedWriter bw = new BufferedWriter(new  FileWriter(new File(SPContainer.EXTENSION_DIR+"\\activity\\spotiapp.action.ENTRY"), true));
+					bw.write(c.getTitle()+"#"+c.toLinkString());
+					
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
 			}
 			
 		});
 		
 		mList.setPreferredSize(new Dimension(200,100));
 		//mJSplitPane.setLeftComponent(mList);
+		mJSplitPane.setBackground(Color.black);
+		
 		FootPanel mBottom = new FootPanel(this);
 		mBottom.setPreferredSize(new Dimension(600,48));
 		this.add(mBottom,BorderLayout.SOUTH);
@@ -638,8 +680,8 @@ mHeaderPanel.addMouseListener(new MouseListener() {
 		
 		
 		mListModel.add(new SimpleEntry(null,null,new URI("Home","spotify:home:a"),null,null,null));
-		mListModel.add(new SimpleEntry(null,null,new URI("Radio","spotify:radio:year:0-3000"),null,null,null));
-		mListModel.add(new SimpleEntry(null,null,new URI("-","spotify:market"),null,null,null));
+		mListModel.add(new SimpleEntry(null,null,new URI("#Apps","spotify:underfined:c"),null,null,null));
+		
 		for(Class<Activity> act : getMashups().values()){
 			try {
 				Activity activity = act.newInstance();
@@ -660,7 +702,12 @@ mHeaderPanel.addMouseListener(new MouseListener() {
 			}
 			
 		}
-		
+		mListModel.add(new SimpleEntry(null,null,new URI("#Shortcuts","spotify:underfined:c"),null,null,null));
+		// Add the entries
+		for(URI c : views){
+			mListModel.add(new SimpleEntry(null,null, c,null, null,null));
+			
+		}
 		//mListModel.add(new SimpleEntry(null,null,new URI("Purchases","spotify:playlist:purchases"),null,null,null));
 		//mListModel.add(new SimpleEntry(null,null,new URI("Local files","spotify:library:coal"),null,null,null));
 		//mListModel.add(new SimpleEntry(null,null,new URI("-","spotify:playlist:purchases"),null,null,null));
@@ -849,6 +896,18 @@ mHeaderPanel.addMouseListener(new MouseListener() {
 	public Enumeration<URL> getLocalResources(String type) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	public ArrayList<URI> getViews() {
+		return views;
+	}
+	public void setViews(ArrayList<URI> views) {
+		this.views = views;
+	}
+	public URI getCurrentPlayingURI() {
+		return currentPlayingURI;
+	}
+	public void setCurrentPlayingURI(URI currentPlayingURI) {
+		this.currentPlayingURI = currentPlayingURI;
 	}
 
 }

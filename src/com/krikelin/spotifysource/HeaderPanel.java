@@ -15,6 +15,7 @@
  */
 package com.krikelin.spotifysource;
 
+import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -26,6 +27,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 import javax.swing.BorderFactory;
+import javax.swing.text.FlowView.FlowStrategy;
 
 
 
@@ -69,8 +71,11 @@ public class HeaderPanel extends BufferedContainer implements SPPart {
 		 public static final int MODE_BACK = -1; 
 		 public static final int MODE_FORWARD = 1;
 		 public abstract void navigate(int mode);
+		 public abstract void saveView();
+		 
 	 }
 	 private NavigateListener mNavigateHandler;
+	SPButton btnAddView;
 	private static final long serialVersionUID = 255442890532618037L;
 	public HeaderPanel(SpotifyWindow context)
 	{
@@ -81,7 +86,7 @@ public class HeaderPanel extends BufferedContainer implements SPPart {
 		setBorder(BorderFactory.createEmptyBorder());
 		
 		setBackground(mHost.getSkin().getBackgroundColor());
-		FlowLayout fl = new FlowLayout(FlowLayout.LEFT);
+		FlowLayout fl = new FlowLayout(FlowLayout.LEADING);
 		this.setLayout(fl );
 		// Add back and forward button and an search box
 		SPButton btn= new SPButton(getContext());
@@ -113,6 +118,18 @@ public class HeaderPanel extends BufferedContainer implements SPPart {
 		});
 		add(btnForward);
 		this.add(mSearchBox);
+		btnAddView = new SPButton(getContext());
+		btnAddView.setText("+");
+		btnAddView.setPreferredSize(new Dimension(24,24));
+		btnAddView.setOnClickListener(new SPOnClickListener() {
+			
+			@Override
+			public void Click(Object sender, Object args) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+	
 		setPreferredSize(new Dimension(40,40));
 		mSearchBox.setPreferredSize(new Dimension(80,20));
 		mSearchBox.addKeyListener(new KeyListener() {
@@ -148,6 +165,7 @@ public class HeaderPanel extends BufferedContainer implements SPPart {
 				}
 			}
 		});
+		add(btnAddView);
 		repaint();
 	}
 	/**

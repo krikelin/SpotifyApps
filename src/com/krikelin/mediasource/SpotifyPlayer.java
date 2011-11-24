@@ -29,6 +29,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
+import com.google.code.jspot.Spotify;
 import com.krikelin.spotifysource.IMCPlaybackEventListener;
 import com.krikelin.spotifysource.ISPEntry;
 
@@ -44,6 +45,7 @@ public class SpotifyPlayer implements IMCSource {
 	}
 	private URI currentSong;
 	private int position;
+	private int duration;
 
 	public SpotifyPlayer(){
 		c = new Timer();
@@ -76,7 +78,7 @@ public class SpotifyPlayer implements IMCSource {
 	 */
 	private int getDuration() {
 		// TODO Auto-generated method stub
-		return 180	;
+		return duration	;
 	}
 	@Override
 	public URI rawFind(URI mediaSource) {
@@ -236,7 +238,14 @@ public class SpotifyPlayer implements IMCSource {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-			
+		
+		try {
+			Spotify c = new Spotify();
+			duration = (int) c.lookupTrack(resource.toFullPath()).getLength();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		// Reset player handler
 		position = 0;
 		playing = true;

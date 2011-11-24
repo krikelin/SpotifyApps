@@ -21,5 +21,6 @@
 	<classpathentry kind="lib" path="C:/Users/Alexander/Documents/Android/SpotifySource/lib/DJNativeSwing.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Alexander/Documents/Android/SpotifySource/lib/DJNativeSwing-SWT.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Alexander/Documents/Android/SpotifySource/lib/swt.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Alexander/Documents/Android/SpotifySource/lib/SimpleWebServer.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

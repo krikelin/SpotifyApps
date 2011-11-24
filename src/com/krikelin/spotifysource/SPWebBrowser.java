@@ -116,6 +116,7 @@ public class SPWebBrowser extends JWebBrowser implements SPWidget {
 		 * @param params
 		 */
 		public void onAction(String action, Object... params);
+		public void onSpotifyAction(String url);
 		
 	}
 	/****
@@ -201,12 +202,18 @@ public class SPWebBrowser extends JWebBrowser implements SPWidget {
 			@Override
 			public void locationChanging(WebBrowserNavigationEvent arg0) {
 				// TODO Auto-generated method stub
-				
+				if(arg0.getNewResourceLocation().startsWith("spotify:")){
+					if(getActionEventListener()!=null){
+						getActionEventListener().onSpotifyAction(arg0.getNewResourceLocation());
+						
+					}
+				}
 			}
 			
 			@Override
 			public void locationChanged(WebBrowserNavigationEvent arg0) {
 				// TODO Auto-generated method stub
+				
 				if(arg0.getNewResourceLocation().endsWith(".html")){
 					arg0.consume();
 					String f = "";
