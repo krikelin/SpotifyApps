@@ -18,17 +18,23 @@ import com.krikelin.spotifysource.URI;
 import com.krikelin.spotifysource.widgets.RadioStream;
 
 public class WebView extends SPContentView{
-
+	public RadioStream getRadioStream(){
+		return radioStream;
+	}
+	private boolean hasRadio;
 	private SPWebBrowser browser;
 	private RadioStream radioStream;
 	private Activity activity;
-	public WebView(String url, Activity act, SpotifyWindow mContext) {
+	
+	public WebView(String url, Activity act, SpotifyWindow mContext, boolean radio) {
 		super( act, mContext);
+		this.hasRadio = radio;
 		this.activity=act;
 		// TODO Auto-generated constructor stub
 		JPanel bc = new JPanel();
 		add(bc);
-		bc.setLayout(new GridLayout(1,1));
+		int rows = hasRadio ? 2 : 1;
+		bc.setLayout(new GridLayout(rows,1));
 		
 		browser = new SPWebBrowser("",getContext(),this,220);
 		radioStream = new RadioStream(act,getContext()); 
@@ -55,8 +61,10 @@ public class WebView extends SPContentView{
 		browser.navigate(url);
 
 		bc.add(browser);
-//		bc.add(radioStream);
-		radioStream.setPreferredSize(new Dimension(640,32));
+		if(hasRadio){
+			bc.add(radioStream);
+			radioStream.setPreferredSize(new Dimension(640,32));
+		}
 	}
 	
 }

@@ -23,7 +23,7 @@ public class spotfm extends Activity {
 		// TODO Auto-generated method stub
 		String userName = args.getParameter();
 		
-		addPage("SpotFM", new WebView("http://www.spofm.net/", this, getContext()));
+		addPage("SpotFM", new WebView("http://www.spofm.net/", this, getContext(), false));
 		super.render(args, result);
 	}
 

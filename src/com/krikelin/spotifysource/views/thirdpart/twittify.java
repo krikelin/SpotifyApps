@@ -21,7 +21,7 @@ public class twittify extends Activity {
 	@Override
 	public void render(URI args, Object... result) {
 		// TODO Auto-generated method stub
-		addPage("Twittify", new WebView("http://cow.neondragon.net/twittify/", this, getContext()));
+		addPage("Twittify", new WebView("http://cow.neondragon.net/twittify/", this, getContext(), false));
 		super.render(args, result);
 	}
 

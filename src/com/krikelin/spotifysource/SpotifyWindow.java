@@ -31,6 +31,7 @@ import java.awt.event.MouseMotionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import com.krikelin.mediasource.*;
+import com.krikelin.spotifysource.widgets.RadioStream;
 import com.krikelin.uility.SHWindow;
 
 import java.awt.event.WindowListener;
@@ -351,16 +352,17 @@ public class SpotifyWindow extends SHWindow implements Context, WindowListener {
 		// Play song
 		if(mPrimaryMediaSource!=null)
 		{
-			mPrimaryMediaSource.play(entry.getUri());
+		//	mPrimaryMediaSource.play(entry.getUri());
+			rs.getPlaylist().add(entry);
 			
-		}
+		}/*
 		for(ISPEntry d : getCurrentPlaylist().getEntries())
 		{
 			if(d instanceof Component)
 			{
 				((Component)d).repaint();
 			}
-		}
+		}*/
 		
 	}
 	
@@ -443,6 +445,8 @@ public class SpotifyWindow extends SHWindow implements Context, WindowListener {
 	}
 	private int mouseOffsetX = 0;
 	private int mouseOffsetY = 0;
+
+	private RadioStream rs;
 	public void centerScreen(){
 		// make the frame half the height and width
 	    Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -672,11 +676,13 @@ mHeaderPanel.addMouseListener(new MouseListener() {
 		//mJSplitPane.setLeftComponent(mList);
 		mJSplitPane.setBackground(Color.black);
 		
+	
+		rs = new RadioStream(null,this);
+		rs.setPreferredSize(new Dimension(640,128));
+		this.add(rs,BorderLayout.SOUTH);
 		FootPanel mBottom = new FootPanel(this);
 		mBottom.setPreferredSize(new Dimension(600,48));
 		this.add(mBottom,BorderLayout.SOUTH);
-		
-		
 		
 		
 		mListModel.add(new SimpleEntry(null,null,new URI("Home","spotify:home:a"),null,null,null));

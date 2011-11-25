@@ -25,7 +25,7 @@ public class stalkify extends Activity {
 		if(args.getParameter() != null){
 			url+=args.getParameter();
 		}
-		addPage("Stalkify", new WebView(url, this, getContext()));
+		addPage("Stalkify", new WebView(url, this, getContext(), false));
 		super.render(args, result);
 	}
 	

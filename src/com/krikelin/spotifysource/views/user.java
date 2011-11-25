@@ -39,7 +39,7 @@ import org.xml.sax.SAXException;
 
 import com.krikelin.spotifysource.*;
 import com.krikelin.spotifysource.spml.SPWebView;
-public class playlist extends Activity {
+public class user extends Activity {
 	private String mSlug;
 	/**
 	 * 
@@ -63,7 +63,7 @@ public class playlist extends Activity {
 				postData += (String)obj+"\n";
 				
 			}
-			
+				
 		}
 	
 	    try {
@@ -145,7 +145,7 @@ public class playlist extends Activity {
 	{
 		@Override
 		public SpotifyWindow getContext(){
-			return playlist.this.getContext();
+			return user.this.getContext();
 		}
 		/**
 		 * 
@@ -156,14 +156,15 @@ public class playlist extends Activity {
 		private JScrollPane mScrollPane;
 		private SPListView listView;
 		private static final long serialVersionUID = 1640855018158536150L;
-		private SPWebView panel;
+		private SPWebBrowser panel;
 		public Overview(Activity activity, SpotifyWindow mContext) {
 			super(activity, mContext);
 			// TODO Auto-generated constructor stub
 			mTableContainer = getContentView();
-			panel = new SPWebView(playlist.this.getContext());
-			panel.setBackground(getContext().getSkin().getBackgroundColor());
-			listView = new SPListView(new SPTableModel(mContents),playlist.this.getContext());
+			panel = new SPWebBrowser(SPContainer.EXTENSION_DIR+"html\\playlist.html",user.this.getContext(), this, 120);
+			panel.navigate(SPContainer.EXTENSION_DIR+"html\\playlist.html");
+			
+			listView = new SPListView(new SPTableModel(mContents),user.this.getContext());
 			mScrollPane = new JScrollPane(listView);
 			mScrollPane.getViewport().setBackground(getContext().getSkin().getBackgroundColor());
 			// Find the music
@@ -174,8 +175,8 @@ public class playlist extends Activity {
 //&			mTableContainer.add(panel,BorderLayout.NORTH);
 			mTableContainer.add(panel,BorderLayout.NORTH);
 			mTableContainer.add(mScrollPane,BorderLayout.CENTER);
-			
-			panel.setPreferredSize(new Dimension(120,120));
+			panel.setMaximumSize(new Dimension(122222,188));
+			panel.setPreferredSize(new Dimension(120,188));
 			doLayout();
 			mTableContainer.doLayout();	
 			
